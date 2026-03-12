@@ -1,0 +1,1069 @@
+<!doctype html>
+<html lang="pt-BR" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HUB AVANÇAR | Ecossistema Empresarial</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "hub-black": "#0A0A0A",
+              "hub-gold": "#D4AF37",
+              "hub-white": "#FFFFFF",
+              "hub-neon": "#F4F085",
+              "hub-gray": "#2C2C2C",
+              "hub-darkgray": "#1A1A1A",
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              display: ["Space Grotesk", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        background-color: #0a0a0a;
+        color: #ffffff;
+        overflow-x: hidden;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0a0a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #2c2c2c;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #d4af37;
+      }
+
+      /* Utilities */
+      .glass {
+        background: rgba(26, 26, 26, 0.6);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .gold-glow {
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+      }
+      .gold-glow:hover {
+        box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+      }
+      .text-gradient-gold {
+        background: linear-gradient(135deg, #ffffff 0%, #d4af37 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Animations */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 1s ease-out;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Particles Background */
+      #particles-js {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 0;
+      }
+    </style>
+  </head>
+  <body class="antialiased selection:bg-hub-gold selection:text-hub-black">
+    <!-- Navbar -->
+    <nav
+      id="navbar"
+      class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-6"
+    >
+      <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div
+          class="text-2xl font-display font-bold tracking-tighter text-white"
+        >
+          HUB <span class="text-hub-gold">AVANÇAR</span>
+        </div>
+        <div
+          class="hidden md:flex items-center space-x-8 text-sm font-medium text-white/80"
+        >
+          <a href="#ecosystem" class="hover:text-hub-gold transition-colors"
+            >Ecossistema</a
+          >
+          <a href="#business" class="hover:text-hub-gold transition-colors"
+            >Negócios</a
+          >
+          <a href="#education" class="hover:text-hub-gold transition-colors"
+            >Educação</a
+          >
+          <a href="#clubs" class="hover:text-hub-gold transition-colors"
+            >Clubes</a
+          >
+          <a
+            href="#contact"
+            class="px-5 py-2.5 rounded-full bg-hub-gold text-black hover:bg-hub-neon transition-colors font-semibold"
+            >Fale Conosco</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section
+      class="relative h-screen flex items-center justify-center overflow-hidden"
+    >
+      <div id="particles-js"></div>
+      <div class="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=2069"
+          alt="Hub Avançar"
+          class="w-full h-full object-cover opacity-30"
+        />
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-hub-black"
+        ></div>
+      </div>
+
+      <div
+        class="relative z-10 text-center px-6 max-w-5xl mx-auto mt-20 fade-in"
+      >
+        <h1
+          class="text-6xl md:text-8xl font-display font-bold tracking-tighter mb-6"
+        >
+          HUB <span class="text-gradient-gold">AVANÇAR</span>
+        </h1>
+        <p
+          class="text-xl md:text-2xl text-white/70 font-light max-w-3xl mx-auto mb-12"
+        >
+          O ecossistema empresarial que conecta negócios, educação,
+          investimentos e qualidade de vida.
+        </p>
+        <div
+          class="flex flex-col sm:flex-row items-center justify-center gap-6"
+        >
+          <a
+            href="#ecosystem"
+            class="px-8 py-4 rounded-full bg-hub-gold text-black font-semibold hover:bg-hub-neon transition-all duration-300 gold-glow w-full sm:w-auto"
+            >Conheça o Hub</a
+          >
+          <a
+            href="#contact"
+            class="px-8 py-4 rounded-full bg-transparent border border-white/20 text-white font-semibold hover:bg-white/5 transition-all duration-300 w-full sm:w-auto"
+            >Agende uma visita</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Ecosystem Section -->
+    <section id="ecosystem" class="py-32 relative overflow-hidden">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-20 fade-in">
+          <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">
+            O Ecossistema
+          </h2>
+          <p class="text-white/60 max-w-2xl mx-auto text-lg">
+            Tudo o que você precisa para evoluir, conectado em um único ambiente
+            de alta performance.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 fade-in">
+          <div
+            class="glass p-8 rounded-2xl text-center hover:border-hub-gold/50 transition-colors"
+          >
+            <i
+              data-lucide="briefcase"
+              class="w-10 h-10 text-hub-gold mx-auto mb-4"
+            ></i>
+            <h3 class="text-xl font-bold">Negócios</h3>
+          </div>
+          <div
+            class="glass p-8 rounded-2xl text-center hover:border-hub-gold/50 transition-colors"
+          >
+            <i
+              data-lucide="graduation-cap"
+              class="w-10 h-10 text-hub-gold mx-auto mb-4"
+            ></i>
+            <h3 class="text-xl font-bold">Educação</h3>
+          </div>
+          <div
+            class="glass p-8 rounded-2xl text-center hover:border-hub-gold/50 transition-colors"
+          >
+            <i
+              data-lucide="users"
+              class="w-10 h-10 text-hub-gold mx-auto mb-4"
+            ></i>
+            <h3 class="text-xl font-bold">Clubes</h3>
+          </div>
+          <div
+            class="glass p-8 rounded-2xl text-center hover:border-hub-gold/50 transition-colors"
+          >
+            <i
+              data-lucide="trending-up"
+              class="w-10 h-10 text-hub-gold mx-auto mb-4"
+            ></i>
+            <h3 class="text-xl font-bold">Investimentos</h3>
+          </div>
+          <div
+            class="glass p-8 rounded-2xl text-center hover:border-hub-gold/50 transition-colors"
+          >
+            <i
+              data-lucide="activity"
+              class="w-10 h-10 text-hub-gold mx-auto mb-4"
+            ></i>
+            <h3 class="text-xl font-bold">Esporte</h3>
+          </div>
+          <div
+            class="glass p-8 rounded-2xl text-center hover:border-hub-gold/50 transition-colors"
+          >
+            <i
+              data-lucide="heart"
+              class="w-10 h-10 text-hub-gold mx-auto mb-4"
+            ></i>
+            <h3 class="text-xl font-bold">Qualidade de Vida</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Business Section -->
+    <section id="business" class="py-32 bg-[#050505] relative">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-20 fade-in">
+          <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">
+            Assessorias Empresariais
+          </h2>
+          <p class="text-white/60 max-w-2xl text-lg">
+            Soluções completas para estruturar, proteger e escalar o seu
+            negócio.
+          </p>
+        </div>
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 fade-in"
+        >
+          <!-- Cards -->
+          <div
+            class="glass p-8 rounded-2xl hover:bg-white/5 transition-all group border border-white/5 hover:border-hub-gold/30"
+          >
+            <i
+              data-lucide="calculator"
+              class="w-8 h-8 text-hub-gold mb-6 group-hover:scale-110 transition-transform"
+            ></i>
+            <h3
+              class="text-xl font-semibold mb-3 text-white group-hover:text-hub-gold"
+            >
+              Contábil
+            </h3>
+            <p class="text-white/50 text-sm">
+              Gestão contábil estratégica e precisa.
+            </p>
+          </div>
+          <div
+            class="glass p-8 rounded-2xl hover:bg-white/5 transition-all group border border-white/5 hover:border-hub-gold/30"
+          >
+            <i
+              data-lucide="landmark"
+              class="w-8 h-8 text-hub-gold mb-6 group-hover:scale-110 transition-transform"
+            ></i>
+            <h3
+              class="text-xl font-semibold mb-3 text-white group-hover:text-hub-gold"
+            >
+              Tributário
+            </h3>
+            <p class="text-white/50 text-sm">
+              Otimização e planejamento fiscal.
+            </p>
+          </div>
+          <div
+            class="glass p-8 rounded-2xl hover:bg-white/5 transition-all group border border-white/5 hover:border-hub-gold/30"
+          >
+            <i
+              data-lucide="coins"
+              class="w-8 h-8 text-hub-gold mb-6 group-hover:scale-110 transition-transform"
+            ></i>
+            <h3
+              class="text-xl font-semibold mb-3 text-white group-hover:text-hub-gold"
+            >
+              Financeiro
+            </h3>
+            <p class="text-white/50 text-sm">
+              Controle e projeções financeiras.
+            </p>
+          </div>
+          <div
+            class="glass p-8 rounded-2xl hover:bg-white/5 transition-all group border border-white/5 hover:border-hub-gold/30"
+          >
+            <i
+              data-lucide="scale"
+              class="w-8 h-8 text-hub-gold mb-6 group-hover:scale-110 transition-transform"
+            ></i>
+            <h3
+              class="text-xl font-semibold mb-3 text-white group-hover:text-hub-gold"
+            >
+              Jurídico
+            </h3>
+            <p class="text-white/50 text-sm">
+              Segurança legal para seus negócios.
+            </p>
+          </div>
+          <div
+            class="glass p-8 rounded-2xl hover:bg-white/5 transition-all group border border-white/5 hover:border-hub-gold/30"
+          >
+            <i
+              data-lucide="megaphone"
+              class="w-8 h-8 text-hub-gold mb-6 group-hover:scale-110 transition-transform"
+            ></i>
+            <h3
+              class="text-xl font-semibold mb-3 text-white group-hover:text-hub-gold"
+            >
+              Marketing
+            </h3>
+            <p class="text-white/50 text-sm">
+              Posicionamento e atração de clientes.
+            </p>
+          </div>
+          <div
+            class="glass p-8 rounded-2xl hover:bg-white/5 transition-all group border border-white/5 hover:border-hub-gold/30"
+          >
+            <i
+              data-lucide="monitor-smartphone"
+              class="w-8 h-8 text-hub-gold mb-6 group-hover:scale-110 transition-transform"
+            ></i>
+            <h3
+              class="text-xl font-semibold mb-3 text-white group-hover:text-hub-gold"
+            >
+              Tecnologia
+            </h3>
+            <p class="text-white/50 text-sm">
+              Inovação e transformação digital.
+            </p>
+          </div>
+          <div
+            class="glass p-8 rounded-2xl hover:bg-white/5 transition-all group border border-white/5 hover:border-hub-gold/30"
+          >
+            <i
+              data-lucide="trending-up"
+              class="w-8 h-8 text-hub-gold mb-6 group-hover:scale-110 transition-transform"
+            ></i>
+            <h3
+              class="text-xl font-semibold mb-3 text-white group-hover:text-hub-gold"
+            >
+              Vendas
+            </h3>
+            <p class="text-white/50 text-sm">
+              Estratégias de conversão e escala.
+            </p>
+          </div>
+          <div
+            class="glass p-8 rounded-2xl hover:bg-white/5 transition-all group border border-white/5 hover:border-hub-gold/30"
+          >
+            <i
+              data-lucide="briefcase"
+              class="w-8 h-8 text-hub-gold mb-6 group-hover:scale-110 transition-transform"
+            ></i>
+            <h3
+              class="text-xl font-semibold mb-3 text-white group-hover:text-hub-gold"
+            >
+              Investimentos
+            </h3>
+            <p class="text-white/50 text-sm">
+              Alocação e captação de recursos.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-32 relative overflow-hidden">
+      <div class="max-w-7xl mx-auto px-6 fade-in">
+        <div class="mb-20 text-center">
+          <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">
+            Educação Executiva
+          </h2>
+          <p class="text-white/60 max-w-2xl mx-auto text-lg">
+            Formações de alto nível para líderes e empresários.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div
+            class="glass p-10 rounded-3xl border border-white/10 hover:border-hub-gold/50 transition-colors group"
+          >
+            <i
+              data-lucide="brain"
+              class="w-10 h-10 text-purple-500 mb-6 group-hover:scale-110 transition-transform"
+            ></i>
+            <h3 class="text-2xl font-bold mb-4 group-hover:text-hub-gold">
+              Especialista Comportamental
+            </h3>
+            <p class="text-white/50 text-sm">
+              Desenvolvimento profundo de soft skills e inteligência emocional.
+            </p>
+          </div>
+          <div
+            class="glass p-10 rounded-3xl border border-white/10 hover:border-hub-gold/50 transition-colors group"
+          >
+            <i
+              data-lucide="mic"
+              class="w-10 h-10 text-blue-500 mb-6 group-hover:scale-110 transition-transform"
+            ></i>
+            <h3 class="text-2xl font-bold mb-4 group-hover:text-hub-gold">
+              Comunicação e Oratória
+            </h3>
+            <p class="text-white/50 text-sm">
+              Técnicas avançadas para apresentações e negociações.
+            </p>
+          </div>
+          <div
+            class="glass p-10 rounded-3xl border border-white/10 hover:border-hub-gold/50 transition-colors group"
+          >
+            <i
+              data-lucide="bot"
+              class="w-10 h-10 text-pink-500 mb-6 group-hover:scale-110 transition-transform"
+            ></i>
+            <h3 class="text-2xl font-bold mb-4 group-hover:text-hub-gold">
+              IA para Negócios
+            </h3>
+            <p class="text-white/50 text-sm">
+              Implementação prática de inteligência artificial na gestão.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Clubs Section -->
+    <section id="clubs" class="py-32 bg-[#050505]">
+      <div class="max-w-7xl mx-auto px-6 fade-in">
+        <div class="mb-20 text-center">
+          <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">
+            Clubes Exclusivos
+          </h2>
+          <p class="text-white/60 max-w-2xl mx-auto text-lg">
+            Ambientes restritos para networking de alto nível.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div class="relative h-[500px] rounded-3xl overflow-hidden group">
+            <img
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2070"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/60 to-transparent opacity-90"
+            ></div>
+            <div class="absolute inset-0 p-10 flex flex-col justify-end">
+              <h3
+                class="text-3xl font-display font-bold text-white mb-4 group-hover:text-hub-gold"
+              >
+                Clube Avançar
+              </h3>
+              <p class="text-white/70 mb-8">
+                A principal comunidade de empresários e líderes.
+              </p>
+              <a
+                href="#"
+                class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-medium hover:bg-hub-gold hover:text-black transition-all w-max"
+                >Fazer parte</a
+              >
+            </div>
+          </div>
+          <div class="relative h-[500px] rounded-3xl overflow-hidden group">
+            <img
+              src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=2070"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/60 to-transparent opacity-90"
+            ></div>
+            <div class="absolute inset-0 p-10 flex flex-col justify-end">
+              <h3
+                class="text-3xl font-display font-bold text-white mb-4 group-hover:text-hub-gold"
+              >
+                Clube do Investidor
+              </h3>
+              <p class="text-white/70 mb-8">
+                Conexões estratégicas para alocação de capital.
+              </p>
+              <a
+                href="#"
+                class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-medium hover:bg-hub-gold hover:text-black transition-all w-max"
+                >Fazer parte</a
+              >
+            </div>
+          </div>
+          <div class="relative h-[500px] rounded-3xl overflow-hidden group">
+            <img
+              src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=2071"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/60 to-transparent opacity-90"
+            ></div>
+            <div class="absolute inset-0 p-10 flex flex-col justify-end">
+              <h3
+                class="text-3xl font-display font-bold text-white mb-4 group-hover:text-hub-gold"
+              >
+                Clube do Construtor
+              </h3>
+              <p class="text-white/70 mb-8">
+                Networking focado no mercado imobiliário e construção.
+              </p>
+              <a
+                href="#"
+                class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-medium hover:bg-hub-gold hover:text-black transition-all w-max"
+                >Fazer parte</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Innovation Section -->
+    <section
+      id="innovation"
+      class="py-32 relative overflow-hidden bg-[#0A0A0A]"
+    >
+      <div class="max-w-7xl mx-auto px-6 relative z-10 fade-in">
+        <div class="flex flex-col lg:flex-row items-center gap-16">
+          <div class="lg:w-1/2">
+            <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">
+              Vale <span class="text-hub-gold">Avançar</span>
+            </h2>
+            <p class="text-white/60 text-lg mb-10 leading-relaxed">
+              O epicentro da inovação. Conectamos mentes brilhantes, tecnologia
+              de ponta e capital inteligente para transformar o futuro dos
+              negócios.
+            </p>
+            <a
+              href="#contact"
+              class="inline-flex items-center justify-center px-8 py-4 rounded-full bg-hub-gold text-black font-semibold hover:bg-hub-neon transition-all gold-glow"
+              >Submeta sua Startup</a
+            >
+          </div>
+          <div class="lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div
+              class="glass p-8 rounded-2xl border border-white/10 hover:border-hub-gold/50 transition-colors group"
+            >
+              <i
+                data-lucide="rocket"
+                class="w-10 h-10 text-hub-gold mb-6 group-hover:scale-110 transition-transform"
+              ></i>
+              <h3 class="text-xl font-bold text-white mb-3">Startups</h3>
+              <p class="text-white/50 text-sm">
+                Incubação e desenvolvimento de ideias inovadoras.
+              </p>
+            </div>
+            <div
+              class="glass p-8 rounded-2xl border border-white/10 hover:border-hub-gold/50 transition-colors group"
+            >
+              <i
+                data-lucide="zap"
+                class="w-10 h-10 text-hub-gold mb-6 group-hover:scale-110 transition-transform"
+              ></i>
+              <h3 class="text-xl font-bold text-white mb-3">Aceleração</h3>
+              <p class="text-white/50 text-sm">
+                Programas intensivos para tração e escala.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Arena Section -->
+    <section id="arena" class="py-32 bg-[#050505] relative overflow-hidden">
+      <div class="max-w-7xl mx-auto px-6 fade-in">
+        <div class="mb-20 text-center">
+          <h2
+            class="text-4xl md:text-5xl font-display font-bold mb-6 uppercase tracking-wider"
+          >
+            Arena <span class="text-hub-gold">Avançar</span>
+          </h2>
+          <p class="text-white/60 max-w-2xl mx-auto text-lg">
+            Corpo e mente alinhados para o máximo desempenho nos negócios.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div
+            class="group relative h-[600px] rounded-3xl overflow-hidden cursor-pointer"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=2070"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90 group-hover:opacity-70 transition-opacity"
+            ></div>
+            <div
+              class="absolute inset-0 p-10 flex flex-col justify-end items-center text-center"
+            >
+              <i
+                data-lucide="dumbbell"
+                class="w-12 h-12 text-hub-gold mb-6 transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500"
+              ></i>
+              <h3
+                class="text-3xl font-display font-bold text-white uppercase tracking-wider group-hover:text-hub-gold transition-colors"
+              >
+                Treinos com Personal
+              </h3>
+            </div>
+          </div>
+          <div
+            class="group relative h-[600px] rounded-3xl overflow-hidden cursor-pointer"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&q=80&w=2070"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90 group-hover:opacity-70 transition-opacity"
+            ></div>
+            <div
+              class="absolute inset-0 p-10 flex flex-col justify-end items-center text-center"
+            >
+              <i
+                data-lucide="swords"
+                class="w-12 h-12 text-hub-gold mb-6 transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500"
+              ></i>
+              <h3
+                class="text-3xl font-display font-bold text-white uppercase tracking-wider group-hover:text-hub-gold transition-colors"
+              >
+                Treinos de Luta
+              </h3>
+            </div>
+          </div>
+          <div
+            class="group relative h-[600px] rounded-3xl overflow-hidden cursor-pointer"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?auto=format&fit=crop&q=80&w=2070"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90 group-hover:opacity-70 transition-opacity"
+            ></div>
+            <div
+              class="absolute inset-0 p-10 flex flex-col justify-end items-center text-center"
+            >
+              <i
+                data-lucide="trophy"
+                class="w-12 h-12 text-hub-gold mb-6 transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500"
+              ></i>
+              <h3
+                class="text-3xl font-display font-bold text-white uppercase tracking-wider group-hover:text-hub-gold transition-colors"
+              >
+                Quadra de Pickleball
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quality of Life Section -->
+    <section id="quality" class="py-32 bg-[#0A0A0A] relative fade-in">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-20 text-center">
+          <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">
+            Espaço Qualidade de Vida
+          </h2>
+          <p class="text-white/60 max-w-2xl mx-auto text-lg">
+            Serviços premium integrados para cuidar de quem faz o negócio
+            acontecer.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <div
+            class="glass aspect-square rounded-3xl flex flex-col items-center justify-center p-6 hover:bg-white/5 transition-all group border border-white/5 hover:border-hub-gold/30"
+          >
+            <i
+              data-lucide="sparkles"
+              class="w-10 h-10 text-white/50 group-hover:text-hub-gold mb-4 transition-colors"
+            ></i>
+            <h3
+              class="text-sm font-medium text-center text-white/80 group-hover:text-white"
+            >
+              Massoterapeuta
+            </h3>
+          </div>
+          <div
+            class="glass aspect-square rounded-3xl flex flex-col items-center justify-center p-6 hover:bg-white/5 transition-all group border border-white/5 hover:border-hub-gold/30"
+          >
+            <i
+              data-lucide="brain"
+              class="w-10 h-10 text-white/50 group-hover:text-hub-gold mb-4 transition-colors"
+            ></i>
+            <h3
+              class="text-sm font-medium text-center text-white/80 group-hover:text-white"
+            >
+              Psicólogo
+            </h3>
+          </div>
+          <div
+            class="glass aspect-square rounded-3xl flex flex-col items-center justify-center p-6 hover:bg-white/5 transition-all group border border-white/5 hover:border-hub-gold/30"
+          >
+            <i
+              data-lucide="apple"
+              class="w-10 h-10 text-white/50 group-hover:text-hub-gold mb-4 transition-colors"
+            ></i>
+            <h3
+              class="text-sm font-medium text-center text-white/80 group-hover:text-white"
+            >
+              Nutricionista
+            </h3>
+          </div>
+          <div
+            class="glass aspect-square rounded-3xl flex flex-col items-center justify-center p-6 hover:bg-white/5 transition-all group border border-white/5 hover:border-hub-gold/30"
+          >
+            <i
+              data-lucide="scissors"
+              class="w-10 h-10 text-white/50 group-hover:text-hub-gold mb-4 transition-colors"
+            ></i>
+            <h3
+              class="text-sm font-medium text-center text-white/80 group-hover:text-white"
+            >
+              Barbearia
+            </h3>
+          </div>
+          <div
+            class="glass aspect-square rounded-3xl flex flex-col items-center justify-center p-6 hover:bg-white/5 transition-all group border border-white/5 hover:border-hub-gold/30"
+          >
+            <i
+              data-lucide="shirt"
+              class="w-10 h-10 text-white/50 group-hover:text-hub-gold mb-4 transition-colors"
+            ></i>
+            <h3
+              class="text-sm font-medium text-center text-white/80 group-hover:text-white"
+            >
+              Alfaiataria
+            </h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 bg-[#050505] relative fade-in">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col lg:flex-row gap-16">
+          <div class="lg:w-1/2">
+            <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">
+              Vamos <span class="text-hub-gold">Avançar</span> Juntos?
+            </h2>
+            <p class="text-white/60 text-lg mb-12">
+              Preencha o formulário ou entre em contato direto pelos nossos
+              canais de atendimento.
+            </p>
+            <div class="space-y-8">
+              <div class="flex items-center gap-6">
+                <div
+                  class="w-14 h-14 rounded-full glass flex items-center justify-center border border-white/10"
+                >
+                  <i
+                    data-lucide="message-circle"
+                    class="w-6 h-6 text-hub-gold"
+                  ></i>
+                </div>
+                <div>
+                  <h4 class="text-white/50 text-sm font-medium mb-1">
+                    WhatsApp Comercial
+                  </h4>
+                  <p class="text-xl font-bold text-white">
+                    +55 (19) 99999-9999
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center gap-6">
+                <div
+                  class="w-14 h-14 rounded-full glass flex items-center justify-center border border-white/10"
+                >
+                  <i data-lucide="mail" class="w-6 h-6 text-hub-gold"></i>
+                </div>
+                <div>
+                  <h4 class="text-white/50 text-sm font-medium mb-1">E-mail</h4>
+                  <p class="text-xl font-bold text-white">
+                    contato@hubavancar.com.br
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="lg:w-1/2 glass p-10 rounded-3xl border border-white/10">
+            <form class="space-y-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                  <label class="text-sm font-medium text-white/70"
+                    >Nome completo</label
+                  >
+                  <input
+                    type="text"
+                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-hub-gold transition-colors"
+                    placeholder="Seu nome"
+                  />
+                </div>
+                <div class="space-y-2">
+                  <label class="text-sm font-medium text-white/70"
+                    >Empresa</label
+                  >
+                  <input
+                    type="text"
+                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-hub-gold transition-colors"
+                    placeholder="Sua empresa"
+                  />
+                </div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                  <label class="text-sm font-medium text-white/70"
+                    >E-mail</label
+                  >
+                  <input
+                    type="email"
+                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-hub-gold transition-colors"
+                    placeholder="seu@email.com"
+                  />
+                </div>
+                <div class="space-y-2">
+                  <label class="text-sm font-medium text-white/70"
+                    >Telefone / WhatsApp</label
+                  >
+                  <input
+                    type="tel"
+                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-hub-gold transition-colors"
+                    placeholder="(00) 00000-0000"
+                  />
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm font-medium text-white/70"
+                  >Mensagem</label
+                >
+                <textarea
+                  rows="4"
+                  class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-hub-gold transition-colors resize-none"
+                  placeholder="Como podemos ajudar?"
+                ></textarea>
+              </div>
+              <button
+                type="button"
+                class="w-full py-4 rounded-xl bg-hub-gold text-black font-bold text-lg hover:bg-hub-neon transition-colors gold-glow"
+              >
+                Falar com o Hub Avançar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#0A0A0A] border-t border-white/5 pt-20 pb-10">
+      <div class="max-w-7xl mx-auto px-6">
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16"
+        >
+          <div class="lg:col-span-1">
+            <div
+              class="text-2xl font-display font-bold tracking-tighter text-white mb-6"
+            >
+              HUB <span class="text-hub-gold">AVANÇAR</span>
+            </div>
+            <p class="text-white/50 text-sm leading-relaxed mb-8">
+              O ecossistema empresarial que conecta negócios, educação,
+              investimentos e qualidade de vida.
+            </p>
+            <div class="flex items-center gap-4">
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/70 hover:bg-hub-gold hover:text-black transition-colors"
+                ><i data-lucide="instagram" class="w-5 h-5"></i
+              ></a>
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/70 hover:bg-hub-gold hover:text-black transition-colors"
+                ><i data-lucide="linkedin" class="w-5 h-5"></i
+              ></a>
+            </div>
+          </div>
+          <div>
+            <h4
+              class="text-white font-bold mb-6 uppercase tracking-wider text-sm"
+            >
+              Ecossistema
+            </h4>
+            <ul class="space-y-4 text-sm text-white/50">
+              <li>
+                <a
+                  href="#business"
+                  class="hover:text-hub-gold transition-colors"
+                  >Assessorias Empresariais</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#education"
+                  class="hover:text-hub-gold transition-colors"
+                  >Educação Executiva</a
+                >
+              </li>
+              <li>
+                <a href="#clubs" class="hover:text-hub-gold transition-colors"
+                  >Clubes Exclusivos</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4
+              class="text-white font-bold mb-6 uppercase tracking-wider text-sm"
+            >
+              Contato
+            </h4>
+            <ul class="space-y-4 text-sm text-white/50">
+              <li>Av. Brasil, 1234 - Americana, SP</li>
+              <li>
+                <a
+                  href="mailto:contato@hubavancar.com.br"
+                  class="hover:text-hub-gold transition-colors"
+                  >contato@hubavancar.com.br</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
+        >
+          <p class="text-white/30 text-xs">
+            &copy; 2026 Hub Avançar. Todos os direitos reservados.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+      // Initialize Lucide Icons
+      lucide.createIcons();
+
+      // Navbar Scroll Effect
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add(
+            "bg-[#0A0A0A]/80",
+            "backdrop-blur-md",
+            "border-b",
+            "border-white/5",
+            "py-4",
+          );
+          navbar.classList.remove("py-6");
+        } else {
+          navbar.classList.remove(
+            "bg-[#0A0A0A]/80",
+            "backdrop-blur-md",
+            "border-b",
+            "border-white/5",
+            "py-4",
+          );
+          navbar.classList.add("py-6");
+        }
+      });
+
+      // Scroll Animations
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".fade-in").forEach((element) => {
+        observer.observe(element);
+      });
+
+      // Particles.js Configuration
+      particlesJS("particles-js", {
+        particles: {
+          number: { value: 80, density: { enable: true, value_area: 800 } },
+          color: { value: "#D4AF37" },
+          shape: { type: "circle" },
+          opacity: { value: 0.5, random: false },
+          size: { value: 3, random: true },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: "#D4AF37",
+            opacity: 0.2,
+            width: 1,
+          },
+          move: {
+            enable: true,
+            speed: 2,
+            direction: "none",
+            random: false,
+            straight: false,
+            out_mode: "out",
+            bounce: false,
+          },
+        },
+        interactivity: {
+          detect_on: "canvas",
+          events: {
+            onhover: { enable: true, mode: "grab" },
+            onclick: { enable: true, mode: "push" },
+            resize: true,
+          },
+          modes: {
+            grab: { distance: 140, line_linked: { opacity: 1 } },
+            push: { particles_nb: 4 },
+          },
+        },
+        retina_detect: true,
+      });
+    </script>
+  </body>
+</html>
