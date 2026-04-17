@@ -3,1467 +3,1946 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hub Avançar</title>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>HUB Avançar</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "hub-black": "#0A0A0A",
+              "hub-gold": "#C6A75E",
+              "hub-gold-light": "#E8D095",
+              "hub-gold-dark": "#9A7E3D",
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
     <style type="text/tailwindcss">
-      @theme {
-        --color-gold-400: #e5c07b;
-        --color-gold-500: #c5a059;
-        --color-gold-600: #a67c00;
-        --color-black-900: #0a0a0a;
-        --color-black-800: #141414;
-        --color-black-700: #1f1f1f;
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+      @layer base {
+        html {
+          scrollbar-width: thin;
+          scrollbar-color: #c6a75e #0a0a0a;
+        }
+        ::-webkit-scrollbar {
+          width: 8px;
+          height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+          background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+          background: #c6a75e;
+          border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: #e8d095;
+        }
+        body {
+          @apply bg-hub-black text-white font-sans antialiased selection:bg-hub-gold selection:text-hub-black overflow-x-hidden;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
       }
 
-      body {
-        background-color: var(--color-black-900);
-        color: #ffffff;
-        font-family: "Inter", sans-serif;
-        overflow-x: hidden;
+      @layer utilities {
+        .glass-panel {
+          @apply bg-white/[0.03] backdrop-blur-[5px] border border-hub-gold/20 rounded-lg;
+        }
+        .heading-minimal {
+          @apply font-sans font-light tracking-[-0.04em] leading-[1.1];
+        }
+        .nav-link-minimal {
+          @apply inline-block text-[11px] uppercase tracking-[0.2em] opacity-60 hover:opacity-100 hover:text-hub-gold-light hover:-translate-y-[2px] transition-all duration-300 cursor-pointer;
+        }
+        .btn-minimal {
+          @apply bg-hub-gold text-black px-10 py-[18px] text-[12px] font-bold uppercase tracking-[0.2em] rounded flex items-center justify-center gap-3 transition-transform hover:scale-105 active:scale-95 border-none cursor-pointer;
+        }
+        .label-minimal {
+          @apply inline-block px-3 py-1.5 border border-hub-gold text-hub-gold text-[10px] uppercase tracking-[0.2em] rounded-sm;
+        }
+
+        .reveal-up {
+          @apply opacity-0 translate-y-8 transition-all duration-[800ms] ease-out;
+        }
+        .reveal-left {
+          @apply opacity-0 -translate-x-8 transition-all duration-[800ms] ease-out;
+        }
+        .reveal-scale {
+          @apply opacity-0 scale-90 transition-all duration-[800ms] ease-out;
+        }
+        .is-revealed {
+          @apply opacity-100 translate-y-0 translate-x-0 scale-100 rotate-0;
+        }
+        .tilt-card {
+          transform-style: preserve-3d;
+          transition:
+            border-color 0.3s,
+            box-shadow 0.3s,
+            transform 0.1s;
+        }
+        .tilt-card:hover {
+          transform: translateY(-8px) !important;
+          box-shadow: 0px 15px 40px -10px rgba(198, 167, 94, 0.3);
+          border-color: rgba(198, 167, 94, 0.5);
+        }
       }
     </style>
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="importmap">
-      {
-        "imports": {
-          "react": "https://esm.sh/react@18.3.1",
-          "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
-          "react-router-dom": "https://esm.sh/react-router-dom@6.22.3?deps=react@18.3.1,react-dom@18.3.1",
-          "lucide-react": "https://esm.sh/lucide-react@0.359.0?deps=react@18.3.1",
-          "framer-motion": "https://esm.sh/framer-motion@11.0.14?deps=react@18.3.1,react-dom@18.3.1",
-          "clsx": "https://esm.sh/clsx@2.1.0",
-          "tailwind-merge": "https://esm.sh/tailwind-merge@2.2.1"
-        }
-      }
-    </script>
-    <script type="text/babel" data-type="module">
-      import React, { StrictMode, useState, useEffect, useRef } from "react";
-      import { createRoot } from "react-dom/client";
-      import {
-        BrowserRouter as Router,
-        Routes,
-        Route,
-        Link,
-        useLocation,
-      } from "react-router-dom";
-      import {
-        Menu,
-        X,
-        ChevronRight,
-        Instagram,
-        Linkedin,
-        Youtube,
-        MapPin,
-        Phone,
-        Mail,
-        ArrowRight,
-        Calendar,
-        Play,
-        Briefcase,
-        Calculator,
-        Scale,
-        TrendingUp,
-        Megaphone,
-        Monitor,
-        Users,
-        Target,
-        Shield,
-        Landmark,
-        BookOpen,
-        Mic,
-        BrainCircuit,
-        Cpu,
-        Globe,
-        Rocket,
-        HardHat,
-        Zap,
-        Coins,
-        LineChart,
-        Dumbbell,
-        Activity,
-        Heart,
-        Brain,
-        Apple,
-        Scissors,
-        Shirt,
-        Coffee,
-        MonitorPlay,
-        Presentation,
-        Mic2,
-      } from "lucide-react";
-      import {
-        motion,
-        AnimatePresence,
-        useScroll,
-        useTransform,
-      } from "framer-motion";
-      import { clsx } from "clsx";
-      import { twMerge } from "tailwind-merge";
-
-      // --- Utils ---
-      function cn(...inputs) {
-        return twMerge(clsx(inputs));
-      }
-
-      // --- Components ---
-      function ScrollToTop() {
-        const { pathname } = useLocation();
-        useEffect(() => {
-          window.scrollTo(0, 0);
-        }, [pathname]);
-        return null;
-      }
-
-      function ParallaxImage({ src, alt, className, overlay = true }) {
-        const ref = useRef(null);
-        const { scrollYProgress } = useScroll({
-          target: ref,
-          offset: ["start end", "end start"],
-        });
-        const y = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
-        return (
-          <div
-            ref={ref}
-            className={cn("relative overflow-hidden w-full h-full", className)}
+  <body
+    class="bg-hub-black text-white font-sans antialiased selection:bg-hub-gold selection:text-hub-black overflow-x-hidden"
+  >
+    <!-- Navbar -->
+    <nav
+      id="navbar"
+      class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-gradient-to-b from-hub-black/80 to-transparent backdrop-blur-md py-4 md:py-5 lg:py-8 reveal-up"
+      data-delay="0"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between"
+      >
+        <a
+          href="#"
+          class="nav-link text-[16px] lg:text-[18px] font-bold tracking-[3px] lg:tracking-[4px] uppercase text-hub-gold flex items-center gap-2"
+          >HUB AVANÇAR</a
+        >
+        <div class="hidden lg:flex items-center gap-6 xl:gap-8">
+          <a href="#ecossistema" class="nav-link nav-link-minimal"
+            >O Ecossistema</a
           >
-            <motion.img
-              src={src}
-              alt={alt}
-              style={{ y, scale: 1.2 }}
-              className="absolute inset-0 w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
-            {overlay && (
-              <div className="absolute inset-0 bg-black-900/60 mix-blend-multiply" />
-            )}
-          </div>
-        );
-      }
-
-      function SectionHeading({ title, subtitle, align = "left", className }) {
-        return (
-          <div
-            className={cn(
-              "mb-12",
-              align === "center" && "text-center",
-              align === "right" && "text-right",
-              className,
-            )}
+          <a href="#experiencia" class="nav-link nav-link-minimal"
+            >Experiência</a
           >
-            {subtitle && (
-              <motion.span
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-gold-500 font-bold tracking-[0.2em] uppercase text-sm mb-4 block"
-              >
-                {subtitle}
-              </motion.span>
-            )}
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-white leading-tight"
+          <a href="#agenda" class="nav-link nav-link-minimal">Agenda</a>
+          <a href="#depoimentos" class="nav-link nav-link-minimal">Membros</a>
+          <a href="#blog" class="nav-link nav-link-minimal">Blog</a>
+          <button class="btn-minimal !px-5 !py-2.5 xl:!px-6 xl:!py-3">
+            Entrar no HUB
+          </button>
+        </div>
+        <button id="mobile-menu-open" class="lg:hidden text-white p-2">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div
+      id="mobile-menu-backdrop"
+      class="fixed inset-0 z-[100] bg-hub-black/60 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300"
+    ></div>
+    <div
+      id="mobile-menu-drawer"
+      class="fixed top-0 right-0 bottom-0 z-[101] w-[85%] sm:w-[360px] bg-hub-black border-l border-white/10 shadow-2xl flex flex-col translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+    >
+      <div class="flex justify-end p-6 md:p-8">
+        <button
+          id="mobile-menu-close"
+          class="text-white/60 hover:text-white p-2 rounded-full hover:bg-white/5 transition-colors"
+        >
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="flex flex-col px-8 py-4 flex-1">
+        <h4
+          class="text-[10px] text-white/40 uppercase tracking-[2px] font-semibold mb-8"
+        >
+          Navegação
+        </h4>
+        <div class="flex flex-col gap-6">
+          <a
+            href="#ecossistema"
+            class="nav-link text-xl md:text-2xl font-light tracking-[-0.01em] text-white/90 hover:text-hub-gold transition-colors flex items-center justify-between group"
+            >O Ecossistema
+            <span
+              class="text-hub-gold opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+              >&rarr;</span
+            ></a
+          >
+          <a
+            href="#experiencia"
+            class="nav-link text-xl md:text-2xl font-light tracking-[-0.01em] text-white/90 hover:text-hub-gold transition-colors flex items-center justify-between group"
+            >Experiência <span class="text-hub-gold">...</span></a
+          >
+          <a
+            href="#agenda"
+            class="nav-link text-xl md:text-2xl font-light tracking-[-0.01em] text-white/90 hover:text-hub-gold transition-colors flex items-center justify-between group"
+            >Agenda <span class="text-hub-gold">...</span></a
+          >
+          <a
+            href="#depoimentos"
+            class="nav-link text-xl md:text-2xl font-light tracking-[-0.01em] text-white/90 hover:text-hub-gold transition-colors flex items-center justify-between group"
+            >Membros <span class="text-hub-gold">...</span></a
+          >
+          <a
+            href="#blog"
+            class="nav-link text-xl md:text-2xl font-light tracking-[-0.01em] text-white/90 hover:text-hub-gold transition-colors flex items-center justify-between group"
+            >Blog <span class="text-hub-gold">...</span></a
+          >
+        </div>
+      </div>
+      <div class="p-8 border-t border-white/10 bg-black/20 mt-auto">
+        <button class="btn-minimal w-full flex justify-center items-center">
+          Entrar no HUB
+        </button>
+      </div>
+    </div>
+
+    <main>
+      <!-- Hero -->
+      <section
+        id="hero"
+        class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+      >
+        <div id="hero-bg" class="absolute inset-0 z-0">
+          <div
+            class="absolute inset-0 bg-gradient-to-b from-transparent via-hub-black/80 to-hub-black"
+          ></div>
+          <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(198,167,94,0.1)_0%,transparent_40%),radial-gradient(circle_at_20%_80%,rgba(198,167,94,0.05)_0%,transparent_40%)]"
+          ></div>
+          <div
+            class="absolute top-1/2 right-[10%] -translate-y-1/2 w-[400px] h-[400px] bg-[radial-gradient(circle,var(--color-hub-gold)_0%,transparent_70%)] opacity-15 blur-[40px]"
+          ></div>
+        </div>
+        <canvas
+          id="particles-canvas"
+          class="absolute inset-0 z-0 pointer-events-none opacity-60"
+        ></canvas>
+        <div
+          id="hero-mid"
+          class="absolute inset-0 z-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none"
+        ></div>
+
+        <div
+          id="hero-content"
+          class="max-w-7xl mx-auto px-6 md:px-12 w-full grid lg:grid-cols-2 gap-12 items-center relative z-10 transition-transform duration-700 ease-out"
+        >
+          <div class="flex flex-col items-start gap-6">
+            <h1
+              class="heading-minimal text-5xl md:text-[56px] reveal-up"
+              data-delay="300"
             >
-              {title}
-            </motion.h2>
-            <motion.div
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.8 }}
-              className={cn(
-                "h-1 bg-gold-500 mt-6",
-                align === "center"
-                  ? "mx-auto w-24"
-                  : align === "right"
-                    ? "ml-auto w-24"
-                    : "w-24",
-              )}
-            />
-          </div>
-        );
-      }
-
-      const navLinks = [
-        { name: "Home", path: "/" },
-        { name: "Negócios", path: "/negocios" },
-        { name: "Educação", path: "/educacao" },
-        { name: "Clubes", path: "/clubes" },
-        { name: "Vale Avançar", path: "/vale-avancar" },
-        { name: "Arena", path: "/arena" },
-        { name: "Qualidade de Vida", path: "/qualidade-vida" },
-        { name: "Espaços", path: "/espacos" },
-      ];
-
-      function Navbar() {
-        const [isScrolled, setIsScrolled] = useState(false);
-        const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-        const location = useLocation();
-
-        useEffect(() => {
-          const handleScroll = () => setIsScrolled(window.scrollY > 50);
-          window.addEventListener("scroll", handleScroll);
-          return () => window.removeEventListener("scroll", handleScroll);
-        }, []);
-
-        useEffect(() => setMobileMenuOpen(false), [location.pathname]);
-
-        return (
-          <header
-            className={cn(
-              "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-              isScrolled
-                ? "bg-black-900/90 backdrop-blur-md py-4 shadow-lg shadow-black-900/50"
-                : "bg-transparent py-6",
-            )}
-          >
-            <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
-              <Link to="/" className="flex items-center gap-2 z-50">
-                <div className="w-10 h-10 bg-gold-500 flex items-center justify-center rounded-sm transform rotate-45">
-                  <span className="text-black-900 font-bold text-xl transform -rotate-45">
-                    H
-                  </span>
-                </div>
-                <span className="text-2xl font-bold tracking-widest uppercase text-white">
-                  Hub <span className="text-gold-500">Avançar</span>
-                </span>
-              </Link>
-              <nav className="hidden xl:flex items-center gap-6">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    to={link.path}
-                    className={cn(
-                      "text-xs font-medium uppercase tracking-wider transition-colors hover:text-gold-500 relative group",
-                      location.pathname === link.path
-                        ? "text-gold-500"
-                        : "text-gray-300",
-                    )}
-                  >
-                    {link.name}
-                    <span
-                      className={cn(
-                        "absolute -bottom-1 left-0 w-0 h-[2px] bg-gold-500 transition-all duration-300 group-hover:w-full",
-                        location.pathname === link.path ? "w-full" : "",
-                      )}
-                    ></span>
-                  </Link>
-                ))}
-                <a
-                  href="https://wa.me/5511999999999"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="ml-4 px-6 py-2 border border-gold-500 text-gold-500 hover:bg-gold-500 hover:text-black-900 transition-colors uppercase text-sm font-bold tracking-wider"
-                >
-                  Contato
-                </a>
-              </nav>
-              <button
-                className="xl:hidden text-white z-50"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              O ecossistema que <br /><span class="text-hub-gold font-semibold"
+                >transforma</span
               >
-                {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+              resultados.
+            </h1>
+            <p
+              class="text-[16px] text-white/60 max-w-[400px] leading-[1.6] reveal-up"
+              data-delay="400"
+            >
+              Hub de negócios, educação executiva e lifestyle de alto padrão.
+              Onde a visão encontra a execução.
+            </p>
+            <ul
+              class="flex flex-col gap-3 text-[14px] text-white/60 mt-2 reveal-up"
+              data-delay="500"
+            >
+              <li class="flex items-center gap-3">
+                <div class="w-1 h-1 rounded-full bg-hub-gold"></div>
+                <span>Networking de Alto Nível</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <div class="w-1 h-1 rounded-full bg-hub-gold"></div>
+                <span>Infraestrutura Premium</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <div class="w-1 h-1 rounded-full bg-hub-gold"></div>
+                <span>Aceleração de Startups</span>
+              </li>
+            </ul>
+            <div
+              class="flex flex-wrap items-center gap-4 mt-2 mb-12 lg:mb-0 reveal-up"
+              data-delay="600"
+            >
+              <button class="btn-minimal">
+                Entrar no HUB
+                <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
               </button>
-              <AnimatePresence>
-                {mobileMenuOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    className="fixed inset-0 bg-black-900 z-40 flex flex-col justify-center items-center overflow-y-auto pt-20 pb-10"
-                  >
-                    <nav className="flex flex-col items-center gap-4 w-full px-8">
-                      {navLinks.map((link, i) => (
-                        <motion.div
-                          key={link.name}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: i * 0.05 }}
-                          className="w-full"
-                        >
-                          <Link
-                            to={link.path}
-                            className={cn(
-                              "flex items-center justify-between w-full py-4 border-b border-white/10 text-lg font-medium uppercase tracking-wider transition-colors",
-                              location.pathname === link.path
-                                ? "text-gold-500"
-                                : "text-white",
-                            )}
-                          >
-                            {link.name}{" "}
-                            <ChevronRight size={20} className="text-gold-500" />
-                          </Link>
-                        </motion.div>
-                      ))}
-                      <motion.a
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: navLinks.length * 0.05 }}
-                        href="https://wa.me/5511999999999"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="mt-8 w-full py-4 bg-gold-500 text-black-900 text-center uppercase font-bold tracking-wider"
-                      >
-                        Fale Conosco
-                      </motion.a>
-                    </nav>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
-          </header>
-        );
-      }
-
-      function Footer() {
-        return (
-          <footer className="bg-black-800 pt-20 pb-10 border-t border-white/10">
-            <div className="container mx-auto px-4 md:px-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-                <div>
-                  <Link to="/" className="flex items-center gap-2 mb-6">
-                    <div className="w-8 h-8 bg-gold-500 flex items-center justify-center rounded-sm transform rotate-45">
-                      <span className="text-black-900 font-bold text-lg transform -rotate-45">
-                        H
-                      </span>
-                    </div>
-                    <span className="text-xl font-bold tracking-widest uppercase text-white">
-                      Hub <span className="text-gold-500">Avançar</span>
-                    </span>
-                  </Link>
-                  <p className="text-gray-400 mb-6 leading-relaxed">
-                    O ecossistema completo para o seu desenvolvimento pessoal,
-                    profissional e empresarial. Conectando mentes, negócios e
-                    oportunidades.
-                  </p>
-                  <div className="flex items-center gap-4">
-                    <a
-                      href="#"
-                      className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-gold-500 hover:text-black-900 transition-colors"
-                    >
-                      <Instagram size={20} />
-                    </a>
-                    <a
-                      href="#"
-                      className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-gold-500 hover:text-black-900 transition-colors"
-                    >
-                      <Linkedin size={20} />
-                    </a>
-                    <a
-                      href="#"
-                      className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-gold-500 hover:text-black-900 transition-colors"
-                    >
-                      <Youtube size={20} />
-                    </a>
-                  </div>
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-white uppercase tracking-wider mb-6">
-                    Ecossistema
-                  </h3>
-                  <ul className="space-y-3">
-                    <li>
-                      <Link
-                        to="/negocios"
-                        className="text-gray-400 hover:text-gold-500 transition-colors"
-                      >
-                        Negócios
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/educacao"
-                        className="text-gray-400 hover:text-gold-500 transition-colors"
-                      >
-                        Educação
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/clubes"
-                        className="text-gray-400 hover:text-gold-500 transition-colors"
-                      >
-                        Clubes
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/vale-avancar"
-                        className="text-gray-400 hover:text-gold-500 transition-colors"
-                      >
-                        Vale Avançar
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/arena"
-                        className="text-gray-400 hover:text-gold-500 transition-colors"
-                      >
-                        Arena
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/qualidade-vida"
-                        className="text-gray-400 hover:text-gold-500 transition-colors"
-                      >
-                        Qualidade de Vida
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-white uppercase tracking-wider mb-6">
-                    Links Úteis
-                  </h3>
-                  <ul className="space-y-3">
-                    <li>
-                      <a
-                        href="#"
-                        className="text-gray-400 hover:text-gold-500 transition-colors"
-                      >
-                        Blog
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="text-gray-400 hover:text-gold-500 transition-colors"
-                      >
-                        Agenda Anual
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="text-gray-400 hover:text-gold-500 transition-colors"
-                      >
-                        Depoimentos
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="text-gray-400 hover:text-gold-500 transition-colors"
-                      >
-                        Política de Privacidade
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="text-gray-400 hover:text-gold-500 transition-colors"
-                      >
-                        Termos de Uso
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-white uppercase tracking-wider mb-6">
-                    Contato
-                  </h3>
-                  <ul className="space-y-4">
-                    <li className="flex items-start gap-3">
-                      <MapPin
-                        className="text-gold-500 shrink-0 mt-1"
-                        size={20}
-                      />
-                      <span className="text-gray-400">
-                        Av. Paulista, 1000 - Bela Vista
-                        <br />
-                        São Paulo - SP, 01310-100
-                      </span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <Phone className="text-gold-500 shrink-0" size={20} />
-                      <span className="text-gray-400">+55 (11) 99999-9999</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <Mail className="text-gold-500 shrink-0" size={20} />
-                      <span className="text-gray-400">
-                        contato@hubavancar.com.br
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-                <p className="text-gray-500 text-sm">
-                  © {new Date().getFullYear()} Hub Avançar. Todos os direitos
-                  reservados.
-                </p>
-                <p className="text-gray-500 text-sm flex items-center gap-1">
-                  Feito com excelência para{" "}
-                  <span className="text-gold-500">avançar</span>.
-                </p>
-              </div>
-            </div>
-          </footer>
-        );
-      }
-
-      // --- Pages ---
-      const areas = [
-        {
-          title: "Negócios",
-          desc: "Assessorias empresariais completas: Contábil, Tributário, Financeiro, Jurídico e mais.",
-          link: "/negocios",
-          img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop",
-        },
-        {
-          title: "Educação",
-          desc: "Formações e treinamentos para líderes, especialistas e investidores.",
-          link: "/educacao",
-          img: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop",
-        },
-        {
-          title: "Clubes",
-          desc: "Conecte-se com o Clube Avançar, Clube do Investidor e Clube do Construtor.",
-          link: "/clubes",
-          img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2084&auto=format&fit=crop",
-        },
-        {
-          title: "Vale Avançar",
-          desc: "Startups, Aceleração, Investimentos Anjo e Venture Capital.",
-          link: "/vale-avancar",
-          img: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?q=80&w=2070&auto=format&fit=crop",
-        },
-        {
-          title: "Arena",
-          desc: "Treinos com personal, lutas e quadra de Pickleball.",
-          link: "/arena",
-          img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop",
-        },
-        {
-          title: "Qualidade de Vida",
-          desc: "Massoterapia, Psicologia, Nutrição, Academia, Barbearia e mais.",
-          link: "/qualidade-vida",
-          img: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2120&auto=format&fit=crop",
-        },
-      ];
-
-      function Home() {
-        return (
-          <div className="w-full">
-            <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 z-0">
-                <ParallaxImage
-                  src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop"
-                  alt="Hub Avançar"
-                  overlay={true}
-                />
-              </div>
-              <div className="container relative z-10 px-4 md:px-8 text-center pt-20">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
-                >
-                  <span className="text-gold-500 font-bold tracking-[0.3em] uppercase text-sm md:text-base mb-6 block">
-                    O seu próximo nível
-                  </span>
-                  <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold uppercase tracking-tighter text-white mb-8 leading-[0.9]">
-                    Hub{" "}
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">
-                      Avançar
-                    </span>
-                  </h1>
-                  <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-12 font-light">
-                    Um ecossistema completo de negócios, educação, saúde e
-                    networking. Tudo que você precisa para evoluir em um só
-                    lugar.
-                  </p>
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                    <a
-                      href="#explore"
-                      className="px-8 py-4 bg-gold-500 text-black-900 font-bold uppercase tracking-wider hover:bg-white transition-colors w-full sm:w-auto"
-                    >
-                      Explorar o Hub
-                    </a>
-                    <button className="px-8 py-4 border border-white text-white font-bold uppercase tracking-wider hover:bg-white hover:text-black-900 transition-colors flex items-center justify-center gap-2 w-full sm:w-auto group">
-                      <Play size={18} className="group-hover:text-black-900" />{" "}
-                      Assistir Vídeo
-                    </button>
-                  </div>
-                </motion.div>
-              </div>
-            </section>
-
-            <section
-              id="explore"
-              className="py-24 md:py-32 bg-black-900 relative"
+          </div>
+          <div
+            class="relative hidden lg:flex justify-center reveal-scale"
+            data-delay="400"
+            style="perspective: 1000px"
+          >
+            <div
+              style="transform: rotateY(-15deg); transform-style: preserve-3d"
             >
-              <div className="container mx-auto px-4 md:px-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                  <div>
-                    <SectionHeading
-                      title="O Ecossistema"
-                      subtitle="Quem Somos"
-                    />
-                    <p className="text-gray-400 text-lg leading-relaxed mb-8">
-                      O Hub Avançar não é apenas um espaço físico, é um
-                      movimento. Reunimos as melhores mentes, os negócios mais
-                      promissores e os serviços essenciais para o seu
-                      desenvolvimento contínuo.
-                    </p>
-                    <p className="text-gray-400 text-lg leading-relaxed mb-10">
-                      Da assessoria empresarial à qualidade de vida, passando
-                      por educação de alto nível e clubes de investimento. Aqui,
-                      o seu crescimento é inevitável.
-                    </p>
-                    <Link
-                      to="/negocios"
-                      className="inline-flex items-center gap-2 text-gold-500 font-bold uppercase tracking-wider hover:text-white transition-colors group"
-                    >
-                      Conheça nossas frentes{" "}
-                      <ArrowRight
-                        size={20}
-                        className="group-hover:translate-x-2 transition-transform"
-                      />
-                    </Link>
-                  </div>
-                  <div className="relative aspect-video bg-black-800 group cursor-pointer overflow-hidden border border-white/10">
-                    <img
-                      src="https://images.unsplash.com/photo-1556761175-5973dc0f32d7?q=80&w=2070&auto=format&fit=crop"
-                      alt="Hub Avançar Video"
-                      className="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-500 group-hover:scale-105"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-20 h-20 rounded-full bg-gold-500/90 flex items-center justify-center text-black-900 pl-1 group-hover:scale-110 transition-transform duration-300">
-                        <Play size={32} fill="currentColor" />
-                      </div>
-                    </div>
-                  </div>
+              <div
+                class="tilt-card relative w-[350px] h-[450px] rounded-[20px] overflow-hidden border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-[20px] shadow-[-20px_40px_100px_rgba(0,0,0,0.5)] p-[2px] transform-gpu transition-transform duration-300"
+              >
+                <div
+                  class="w-full h-full bg-black rounded-[18px] overflow-hidden relative"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop"
+                    class="w-full h-full object-cover opacity-80"
+                    alt="Office Hero"
+                    referrerpolicy="no-referrer"
+                  />
+                  <div
+                    class="absolute inset-0 bg-gradient-to-t from-hub-black/80 via-transparent to-transparent pointer-events-none"
+                  ></div>
                 </div>
               </div>
-            </section>
-
-            <section className="py-24 bg-black-800">
-              <div className="container mx-auto px-4 md:px-8">
-                <SectionHeading
-                  title="Nossas Frentes"
-                  subtitle="O que oferecemos"
-                  align="center"
-                />
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
-                  {areas.map((area, index) => (
-                    <motion.div
-                      key={area.title}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                      className="group relative h-[400px] overflow-hidden bg-black-900"
-                    >
-                      <img
-                        src={area.img}
-                        alt={area.title}
-                        className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-30 group-hover:scale-110 transition-all duration-700"
-                        referrerPolicy="no-referrer"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black-900 via-black-900/50 to-transparent" />
-                      <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                        <h3 className="text-2xl font-bold uppercase tracking-wider text-white mb-3 group-hover:text-gold-500 transition-colors">
-                          {area.title}
-                        </h3>
-                        <p className="text-gray-400 mb-6 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                          {area.desc}
-                        </p>
-                        <Link
-                          to={area.link}
-                          className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-gold-500"
-                        >
-                          Saiba mais <ArrowRight size={16} />
-                        </Link>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </section>
-          </div>
-        );
-      }
-
-      const services = [
-        {
-          icon: Calculator,
-          title: "Contábil",
-          desc: "Gestão contábil estratégica para otimização de resultados e conformidade.",
-        },
-        {
-          icon: Landmark,
-          title: "Tributário",
-          desc: "Planejamento e inteligência tributária para redução legal de impostos.",
-        },
-        {
-          icon: TrendingUp,
-          title: "Financeiro",
-          desc: "BPO Financeiro, estruturação de fluxo de caixa e valuation.",
-        },
-        {
-          icon: Scale,
-          title: "Jurídico",
-          desc: "Assessoria jurídica preventiva e contenciosa especializada em negócios.",
-        },
-        {
-          icon: Megaphone,
-          title: "Marketing",
-          desc: "Estratégias de posicionamento, branding e marketing digital de performance.",
-        },
-        {
-          icon: Monitor,
-          title: "Tecnologia",
-          desc: "Transformação digital, implantação de sistemas e segurança da informação.",
-        },
-        {
-          icon: Target,
-          title: "Vendas",
-          desc: "Estruturação de máquinas de vendas e treinamento de equipes comerciais.",
-        },
-        {
-          icon: Users,
-          title: "Comunicação",
-          desc: "Assessoria de imprensa, relações públicas e comunicação corporativa.",
-        },
-        {
-          icon: Users,
-          title: "Pessoas",
-          desc: "Recrutamento estratégico, desenvolvimento de líderes e gestão de talentos.",
-        },
-        {
-          icon: Target,
-          title: "Cultura",
-          desc: "Diagnóstico e transformação de cultura organizacional.",
-        },
-        {
-          icon: Shield,
-          title: "Governança",
-          desc: "Implementação de conselhos, compliance e sucessão familiar.",
-        },
-        {
-          icon: Briefcase,
-          title: "Investimentos",
-          desc: "Assessoria para captação de recursos e M&A.",
-        },
-      ];
-
-      function Negocios() {
-        return (
-          <div className="w-full">
-            <section className="relative h-[60vh] w-full flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 z-0">
-                <ParallaxImage
-                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
-                  alt="Negócios"
-                />
-              </div>
-              <div className="container relative z-10 px-4 text-center pt-20">
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-5xl md:text-7xl font-bold uppercase tracking-tighter text-white mb-6"
-                >
-                  <span className="text-gold-500">Negócios</span>
-                </motion.h1>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="text-xl text-gray-300 max-w-2xl mx-auto"
-                >
-                  Assessorias empresariais completas para estruturar, proteger e
-                  escalar a sua empresa.
-                </motion.p>
-              </div>
-            </section>
-            <section className="py-24 bg-black-900">
-              <div className="container mx-auto px-4 md:px-8">
-                <SectionHeading
-                  title="Nossas Assessorias"
-                  subtitle="Especialidades"
-                  align="center"
-                />
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-16">
-                  {services.map((service, index) => {
-                    const Icon = service.icon;
-                    return (
-                      <motion.div
-                        key={service.title}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.05 }}
-                        className="bg-black-800 border border-white/5 p-8 hover:border-gold-500/50 transition-colors group"
-                      >
-                        <div className="w-14 h-14 bg-black-900 flex items-center justify-center mb-6 text-gold-500 group-hover:scale-110 transition-transform">
-                          <Icon size={28} strokeWidth={1.5} />
-                        </div>
-                        <h3 className="text-xl font-bold text-white uppercase tracking-wider mb-3">
-                          {service.title}
-                        </h3>
-                        <p className="text-gray-400 text-sm leading-relaxed">
-                          {service.desc}
-                        </p>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-            </section>
-          </div>
-        );
-      }
-
-      const courses = [
-        {
-          icon: BrainCircuit,
-          title: "Especialista Comportamental",
-          desc: "Entenda profundamente o comportamento humano para gerar mais resultados.",
-        },
-        {
-          icon: Mic,
-          title: "Comunicação e Oratória",
-          desc: "Técnicas avançadas para apresentações de alto impacto e persuasão.",
-        },
-        {
-          icon: Users,
-          title: "Liderança na Prática",
-          desc: "Desenvolva habilidades para gerir equipes de alta performance.",
-        },
-        {
-          icon: BookOpen,
-          title: "Gestão e Inteligência Empresarial",
-          desc: "Visão sistêmica e estratégica para tomada de decisões complexas.",
-        },
-        {
-          icon: Cpu,
-          title: "IA para Negócios",
-          desc: "Aplicações práticas de Inteligência Artificial para otimizar processos.",
-        },
-        {
-          icon: Globe,
-          title: "Inglês para Negócios",
-          desc: "Comunicação fluente e vocabulário específico para o mundo corporativo.",
-        },
-        {
-          icon: Rocket,
-          title: "Investidor Anjo e Nova Economia",
-          desc: "Formação completa para atuar no ecossistema de startups e inovação.",
-        },
-      ];
-
-      function Educacao() {
-        return (
-          <div className="w-full">
-            <section className="relative h-[60vh] w-full flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 z-0">
-                <ParallaxImage
-                  src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop"
-                  alt="Educação"
-                />
-              </div>
-              <div className="container relative z-10 px-4 text-center pt-20">
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-5xl md:text-7xl font-bold uppercase tracking-tighter text-white mb-6"
-                >
-                  <span className="text-gold-500">Educação</span>
-                </motion.h1>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="text-xl text-gray-300 max-w-2xl mx-auto"
-                >
-                  Formações e treinamentos de alto nível para quem busca a
-                  excelência.
-                </motion.p>
-              </div>
-            </section>
-            <section className="py-24 bg-black-900">
-              <div className="container mx-auto px-4 md:px-8">
-                <SectionHeading
-                  title="Formações"
-                  subtitle="Cursos e Treinamentos"
-                  align="center"
-                />
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
-                  {courses.map((course, index) => {
-                    const Icon = course.icon;
-                    return (
-                      <motion.div
-                        key={course.title}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.1 }}
-                        className="bg-black-800 p-10 border-l-4 border-gold-500 hover:bg-black-700 transition-colors"
-                      >
-                        <Icon size={32} className="text-gold-500 mb-6" />
-                        <h3 className="text-2xl font-bold text-white uppercase tracking-wider mb-4">
-                          {course.title}
-                        </h3>
-                        <p className="text-gray-400 leading-relaxed">
-                          {course.desc}
-                        </p>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-            </section>
-          </div>
-        );
-      }
-
-      const clubs = [
-        {
-          icon: Users,
-          title: "Clube Avançar",
-          desc: "A principal comunidade de networking e negócios do ecossistema. Conecte-se com líderes e empresários de alto nível.",
-          link: "https://clubeavancar.com.br",
-          cta: "Acessar Clube Avançar",
-        },
-        {
-          icon: TrendingUp,
-          title: "Clube do Investidor",
-          desc: "Acesso exclusivo a oportunidades de investimento, análises de mercado e networking com outros investidores.",
-          link: "#",
-          cta: "Saiba Mais",
-        },
-        {
-          icon: HardHat,
-          title: "Clube do Construtor",
-          desc: "Comunidade focada no setor imobiliário e construção civil. Troca de experiências, parcerias e negócios.",
-          link: "#",
-          cta: "Saiba Mais",
-        },
-      ];
-
-      function Clubes() {
-        return (
-          <div className="w-full">
-            <section className="relative h-[60vh] w-full flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 z-0">
-                <ParallaxImage
-                  src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2084&auto=format&fit=crop"
-                  alt="Clubes"
-                />
-              </div>
-              <div className="container relative z-10 px-4 text-center pt-20">
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-5xl md:text-7xl font-bold uppercase tracking-tighter text-white mb-6"
-                >
-                  <span className="text-gold-500">Clubes</span>
-                </motion.h1>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="text-xl text-gray-300 max-w-2xl mx-auto"
-                >
-                  Comunidades exclusivas para networking, negócios e
-                  investimentos.
-                </motion.p>
-              </div>
-            </section>
-            <section className="py-24 bg-black-900">
-              <div className="container mx-auto px-4 md:px-8">
-                <SectionHeading
-                  title="Nossas Comunidades"
-                  subtitle="Networking"
-                  align="center"
-                />
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-                  {clubs.map((club, index) => {
-                    const Icon = club.icon;
-                    return (
-                      <motion.div
-                        key={club.title}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.1 }}
-                        className="bg-black-800 p-10 flex flex-col h-full border border-white/5 hover:border-gold-500/50 transition-colors"
-                      >
-                        <Icon size={40} className="text-gold-500 mb-8" />
-                        <h3 className="text-2xl font-bold text-white uppercase tracking-wider mb-4">
-                          {club.title}
-                        </h3>
-                        <p className="text-gray-400 leading-relaxed mb-8 flex-grow">
-                          {club.desc}
-                        </p>
-                        <a
-                          href={club.link}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-block px-6 py-3 border border-gold-500 text-gold-500 font-bold uppercase tracking-wider hover:bg-gold-500 hover:text-black-900 transition-colors text-center text-sm"
-                        >
-                          {club.cta}
-                        </a>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-            </section>
-          </div>
-        );
-      }
-
-      const items = [
-        {
-          icon: Rocket,
-          title: "Startups",
-          desc: "Apoio completo desde a ideação até a validação do modelo de negócios e tração inicial.",
-        },
-        {
-          icon: Zap,
-          title: "Aceleração",
-          desc: "Programas intensivos para escalar negócios com mentoria de especialistas do mercado.",
-        },
-        {
-          icon: Coins,
-          title: "Investimentos Anjo",
-          desc: "Conexão entre empreendedores promissores e investidores anjo qualificados.",
-        },
-        {
-          icon: LineChart,
-          title: "Venture Capital",
-          desc: "Estruturação para rodadas de captação maiores e relacionamento com fundos de VC.",
-        },
-      ];
-
-      function ValeAvancar() {
-        return (
-          <div className="w-full">
-            <section className="relative h-[60vh] w-full flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 z-0">
-                <ParallaxImage
-                  src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?q=80&w=2070&auto=format&fit=crop"
-                  alt="Vale Avançar"
-                />
-              </div>
-              <div className="container relative z-10 px-4 text-center pt-20">
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-5xl md:text-7xl font-bold uppercase tracking-tighter text-white mb-6"
-                >
-                  Vale <span className="text-gold-500">Avançar</span>
-                </motion.h1>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="text-xl text-gray-300 max-w-2xl mx-auto"
-                >
-                  O motor de inovação e investimentos do nosso ecossistema.
-                </motion.p>
-              </div>
-            </section>
-            <section className="py-24 bg-black-900">
-              <div className="container mx-auto px-4 md:px-8">
-                <SectionHeading
-                  title="Inovação & Capital"
-                  subtitle="Ecossistema"
-                  align="center"
-                />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16 max-w-5xl mx-auto">
-                  {items.map((item, index) => {
-                    const Icon = item.icon;
-                    return (
-                      <motion.div
-                        key={item.title}
-                        initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.1 }}
-                        className="bg-black-800 p-10 flex items-start gap-6 group hover:bg-black-700 transition-colors"
-                      >
-                        <div className="w-16 h-16 bg-black-900 flex items-center justify-center shrink-0 border border-gold-500/30 group-hover:border-gold-500 transition-colors">
-                          <Icon size={32} className="text-gold-500" />
-                        </div>
-                        <div>
-                          <h3 className="text-2xl font-bold text-white uppercase tracking-wider mb-3">
-                            {item.title}
-                          </h3>
-                          <p className="text-gray-400 leading-relaxed">
-                            {item.desc}
-                          </p>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-            </section>
-          </div>
-        );
-      }
-
-      const activities = [
-        {
-          icon: Dumbbell,
-          title: "Treinos com Personal",
-          desc: "Acompanhamento individualizado para resultados de alta performance física.",
-        },
-        {
-          icon: Activity,
-          title: "Treinos de Luta",
-          desc: "Artes marciais para condicionamento físico, disciplina e foco mental.",
-        },
-        {
-          icon: Target,
-          title: "Quadra de Pickleball",
-          desc: "O esporte que mais cresce no mundo, unindo networking e atividade física.",
-        },
-      ];
-
-      function Arena() {
-        return (
-          <div className="w-full">
-            <section className="relative h-[60vh] w-full flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 z-0">
-                <ParallaxImage
-                  src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop"
-                  alt="Arena"
-                />
-              </div>
-              <div className="container relative z-10 px-4 text-center pt-20">
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-5xl md:text-7xl font-bold uppercase tracking-tighter text-white mb-6"
-                >
-                  <span className="text-gold-500">Arena</span> Avançar
-                </motion.h1>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="text-xl text-gray-300 max-w-2xl mx-auto"
-                >
-                  Onde o corpo acompanha a evolução da mente e dos negócios.
-                </motion.p>
-              </div>
-            </section>
-            <section className="py-24 bg-black-900">
-              <div className="container mx-auto px-4 md:px-8">
-                <SectionHeading
-                  title="Esporte & Performance"
-                  subtitle="Atividades"
-                  align="center"
-                />
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-                  {activities.map((activity, index) => {
-                    const Icon = activity.icon;
-                    return (
-                      <motion.div
-                        key={activity.title}
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.1 }}
-                        className="relative h-[400px] group overflow-hidden bg-black-800"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-t from-black-900 via-black-900/80 to-transparent z-10" />
-                        <div className="absolute inset-0 flex flex-col justify-end p-8 z-20">
-                          <Icon
-                            size={40}
-                            className="text-gold-500 mb-6 group-hover:-translate-y-2 transition-transform duration-300"
-                          />
-                          <h3 className="text-2xl font-bold text-white uppercase tracking-wider mb-3">
-                            {activity.title}
-                          </h3>
-                          <p className="text-gray-400 leading-relaxed">
-                            {activity.desc}
-                          </p>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-            </section>
-          </div>
-        );
-      }
-
-      const qvServices = [
-        {
-          icon: Heart,
-          title: "Massoterapeuta",
-          desc: "Terapias manuais para alívio de tensões e recuperação.",
-        },
-        {
-          icon: Brain,
-          title: "Psicólogo",
-          desc: "Apoio à saúde mental, gestão de estresse e desenvolvimento emocional.",
-        },
-        {
-          icon: Apple,
-          title: "Nutricionista",
-          desc: "Planejamento alimentar focado em performance e longevidade.",
-        },
-        {
-          icon: Dumbbell,
-          title: "Personal Trainer",
-          desc: "Acompanhamento físico especializado.",
-        },
-        {
-          icon: Shield,
-          title: "Defesa Pessoal",
-          desc: "Técnicas de proteção, autoconfiança e disciplina.",
-        },
-        {
-          icon: Dumbbell,
-          title: "Academia",
-          desc: "Estrutura completa com equipamentos de última geração.",
-        },
-        {
-          icon: Scissors,
-          title: "Barbearia",
-          desc: "Cuidados pessoais e estética masculina.",
-        },
-        {
-          icon: Shirt,
-          title: "Alfaiataria",
-          desc: "Consultoria de imagem e confecção sob medida.",
-        },
-        {
-          icon: BookOpen,
-          title: "Livraria",
-          desc: "Curadoria de títulos sobre negócios, desenvolvimento e liderança.",
-        },
-      ];
-
-      function QualidadeVida() {
-        return (
-          <div className="w-full">
-            <section className="relative h-[60vh] w-full flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 z-0">
-                <ParallaxImage
-                  src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2120&auto=format&fit=crop"
-                  alt="Qualidade de Vida"
-                />
-              </div>
-              <div className="container relative z-10 px-4 text-center pt-20">
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-5xl md:text-7xl font-bold uppercase tracking-tighter text-white mb-6"
-                >
-                  Qualidade de <span className="text-gold-500">Vida</span>
-                </motion.h1>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="text-xl text-gray-300 max-w-2xl mx-auto"
-                >
-                  Serviços de cuidado integral para você performar no seu
-                  máximo.
-                </motion.p>
-              </div>
-            </section>
-            <section className="py-24 bg-black-900">
-              <div className="container mx-auto px-4 md:px-8">
-                <SectionHeading
-                  title="Serviços"
-                  subtitle="Bem-estar"
-                  align="center"
-                />
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
-                  {qvServices.map((service, index) => {
-                    const Icon = service.icon;
-                    return (
-                      <motion.div
-                        key={service.title}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.05 }}
-                        className="bg-black-800 p-8 border border-white/5 hover:border-gold-500/30 transition-colors flex flex-col items-center text-center group"
-                      >
-                        <div className="w-16 h-16 rounded-full bg-black-900 flex items-center justify-center mb-6 text-gold-500 group-hover:bg-gold-500 group-hover:text-black-900 transition-colors">
-                          <Icon size={24} />
-                        </div>
-                        <h3 className="text-xl font-bold text-white uppercase tracking-wider mb-3">
-                          {service.title}
-                        </h3>
-                        <p className="text-gray-400 text-sm leading-relaxed">
-                          {service.desc}
-                        </p>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-            </section>
-          </div>
-        );
-      }
-
-      const spaces = [
-        {
-          title: "Cafeterias",
-          desc: "Ambientes projetados para encontros informais, networking e aquele café premium para recarregar as energias.",
-          img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=2047&auto=format&fit=crop",
-          icon: Coffee,
-        },
-        {
-          title: "Salas de Reunião",
-          desc: "Espaços privativos equipados com tecnologia de ponta para fechamento de negócios e alinhamentos estratégicos.",
-          img: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop",
-          icon: MonitorPlay,
-        },
-        {
-          title: "Auditório",
-          desc: "Estrutura completa para palestras, workshops e os grandes eventos da Agenda Anual do Hub Avançar.",
-          img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop",
-          icon: Presentation,
-        },
-        {
-          title: "Estúdio de Podcast",
-          desc: "Estúdio profissional com isolamento acústico e equipamentos de alta qualidade para gravação de conteúdo.",
-          img: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop",
-          icon: Mic2,
-        },
-      ];
-
-      function Espacos() {
-        return (
-          <div className="w-full">
-            <section className="relative h-[60vh] w-full flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 z-0">
-                <ParallaxImage
-                  src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=2069&auto=format&fit=crop"
-                  alt="Espaços"
-                />
-              </div>
-              <div className="container relative z-10 px-4 text-center pt-20">
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-5xl md:text-7xl font-bold uppercase tracking-tighter text-white mb-6"
-                >
-                  Nossos <span className="text-gold-500">Espaços</span>
-                </motion.h1>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="text-xl text-gray-300 max-w-2xl mx-auto"
-                >
-                  Infraestrutura de classe mundial desenhada para o seu conforto
-                  e produtividade.
-                </motion.p>
-              </div>
-            </section>
-            <section className="py-24 bg-black-900">
-              <div className="container mx-auto px-4 md:px-8">
-                <SectionHeading
-                  title="Infraestrutura"
-                  subtitle="Ambientes"
-                  align="center"
-                />
-                <div className="space-y-24 mt-16">
-                  {spaces.map((space, index) => {
-                    const Icon = space.icon;
-                    const isEven = index % 2 === 0;
-                    return (
-                      <div
-                        key={space.title}
-                        className={`flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} gap-12 items-center`}
-                      >
-                        <motion.div
-                          initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          className="w-full lg:w-1/2 relative aspect-[4/3] overflow-hidden border border-white/10"
-                        >
-                          <img
-                            src={space.img}
-                            alt={space.title}
-                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                            referrerPolicy="no-referrer"
-                          />
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0, y: 30 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: true }}
-                          className="w-full lg:w-1/2"
-                        >
-                          <div className="flex items-center gap-4 mb-6">
-                            <div className="w-12 h-12 bg-gold-500 flex items-center justify-center text-black-900">
-                              <Icon size={24} />
-                            </div>
-                            <h3 className="text-3xl font-bold text-white uppercase tracking-wider">
-                              {space.title}
-                            </h3>
-                          </div>
-                          <p className="text-gray-400 text-lg leading-relaxed mb-8">
-                            {space.desc}
-                          </p>
-                          <button className="px-8 py-4 border border-gold-500 text-gold-500 font-bold uppercase tracking-wider hover:bg-gold-500 hover:text-black-900 transition-colors">
-                            Reservar Espaço
-                          </button>
-                        </motion.div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </section>
-          </div>
-        );
-      }
-
-      // --- App ---
-      function App() {
-        return (
-          <Router>
-            <ScrollToTop />
-            <div className="min-h-screen flex flex-col bg-black-900 text-white font-sans">
-              <Navbar />
-              <main className="flex-grow">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/negocios" element={<Negocios />} />
-                  <Route path="/educacao" element={<Educacao />} />
-                  <Route path="/clubes" element={<Clubes />} />
-                  <Route path="/vale-avancar" element={<ValeAvancar />} />
-                  <Route path="/arena" element={<Arena />} />
-                  <Route path="/qualidade-vida" element={<QualidadeVida />} />
-                  <Route path="/espacos" element={<Espacos />} />
-                </Routes>
-              </main>
-              <Footer />
             </div>
-          </Router>
-        );
+          </div>
+        </div>
+      </section>
+
+      <!-- Ecosystem -->
+      <section
+        id="ecossistema"
+        class="py-40 md:py-48 relative z-10 bg-hub-black"
+      >
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+          <div class="mb-16 md:mb-24 reveal-up">
+            <h2 class="heading-minimal text-4xl md:text-[48px] mb-6">
+              O <span class="text-hub-gold font-semibold">Ecossistema</span>
+            </h2>
+            <p class="text-[16px] text-white/60 max-w-[400px] leading-[1.6]">
+              Seis pilares fundamentais integrados em um único espaço para
+              impulsionar sua jornada rumo ao topo.
+            </p>
+          </div>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="h-full perspective-[1000px] reveal-up" data-delay="0">
+              <div
+                data-id="negocios"
+                class="tilt-card eco-trigger group cursor-pointer glass-panel overflow-hidden relative hover-trigger h-full transition-colors duration-300"
+              >
+                <div
+                  class="absolute inset-0 bg-gradient-to-br from-hub-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                ></div>
+                <div
+                  class="p-6 relative z-10 h-full flex flex-col min-h-[180px] transform-gpu translate-z-[30px]"
+                >
+                  <div
+                    class="w-10 h-10 rounded bg-hub-gold/10 flex items-center justify-center mb-4 text-hub-gold group-hover:scale-110 transition-transform duration-500"
+                  >
+                    <i data-lucide="briefcase" class="w-5 h-5"></i>
+                  </div>
+                  <h3
+                    class="text-[12px] uppercase tracking-[1px] text-hub-gold mb-2 group-hover:text-hub-gold transition-colors"
+                  >
+                    Negócios
+                  </h3>
+                  <p class="text-[10px] text-white/40 mb-6 flex-1">
+                    Soluções completas para estruturação e escala corporativa.
+                  </p>
+                  <div
+                    class="flex items-center text-[10px] uppercase tracking-[1px] font-medium text-hub-gold mt-auto"
+                  >
+                    Explorar
+                    <i
+                      data-lucide="chevron-right"
+                      class="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition-transform"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="h-full perspective-[1000px] reveal-up" data-delay="100">
+              <div
+                data-id="educacao"
+                class="tilt-card eco-trigger group cursor-pointer glass-panel overflow-hidden relative hover-trigger h-full transition-colors duration-300"
+              >
+                <div
+                  class="absolute inset-0 bg-gradient-to-br from-hub-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                ></div>
+                <div
+                  class="p-6 relative z-10 h-full flex flex-col min-h-[180px] transform-gpu translate-z-[30px]"
+                >
+                  <div
+                    class="w-10 h-10 rounded bg-hub-gold/10 flex items-center justify-center mb-4 text-hub-gold group-hover:scale-110 transition-transform duration-500"
+                  >
+                    <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                  </div>
+                  <h3
+                    class="text-[12px] uppercase tracking-[1px] text-hub-gold mb-2 group-hover:text-hub-gold transition-colors"
+                  >
+                    Educação
+                  </h3>
+                  <p class="text-[10px] text-white/40 mb-6 flex-1">
+                    Formação contínua para líderes e executivos de alto impacto.
+                  </p>
+                  <div
+                    class="flex items-center text-[10px] uppercase tracking-[1px] font-medium text-hub-gold mt-auto"
+                  >
+                    Explorar
+                    <i
+                      data-lucide="chevron-right"
+                      class="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition-transform"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="h-full perspective-[1000px] reveal-up" data-delay="200">
+              <div
+                data-id="clubes"
+                class="tilt-card eco-trigger group cursor-pointer glass-panel overflow-hidden relative hover-trigger h-full transition-colors duration-300"
+              >
+                <div
+                  class="absolute inset-0 bg-gradient-to-br from-hub-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                ></div>
+                <div
+                  class="p-6 relative z-10 h-full flex flex-col min-h-[180px] transform-gpu translate-z-[30px]"
+                >
+                  <div
+                    class="w-10 h-10 rounded bg-hub-gold/10 flex items-center justify-center mb-4 text-hub-gold group-hover:scale-110 transition-transform duration-500"
+                  >
+                    <i data-lucide="users" class="w-5 h-5"></i>
+                  </div>
+                  <h3
+                    class="text-[12px] uppercase tracking-[1px] text-hub-gold mb-2 group-hover:text-hub-gold transition-colors"
+                  >
+                    Clubes
+                  </h3>
+                  <p class="text-[10px] text-white/40 mb-6 flex-1">
+                    Comunidades exclusivas para networking e geração de
+                    negócios.
+                  </p>
+                  <div
+                    class="flex items-center text-[10px] uppercase tracking-[1px] font-medium text-hub-gold mt-auto"
+                  >
+                    Explorar
+                    <i
+                      data-lucide="chevron-right"
+                      class="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition-transform"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="h-full perspective-[1000px] reveal-up" data-delay="300">
+              <div
+                data-id="vale"
+                class="tilt-card eco-trigger group cursor-pointer glass-panel overflow-hidden relative hover-trigger h-full transition-colors duration-300"
+              >
+                <div
+                  class="absolute inset-0 bg-gradient-to-br from-hub-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                ></div>
+                <div
+                  class="p-6 relative z-10 h-full flex flex-col min-h-[180px] transform-gpu translate-z-[30px]"
+                >
+                  <div
+                    class="w-10 h-10 rounded bg-hub-gold/10 flex items-center justify-center mb-4 text-hub-gold group-hover:scale-110 transition-transform duration-500"
+                  >
+                    <i data-lucide="rocket" class="w-5 h-5"></i>
+                  </div>
+                  <h3
+                    class="text-[12px] uppercase tracking-[1px] text-hub-gold mb-2 group-hover:text-hub-gold transition-colors"
+                  >
+                    Vale Avançar
+                  </h3>
+                  <p class="text-[10px] text-white/40 mb-6 flex-1">
+                    O epicentro da inovação, conectando capital a ideias
+                    disruptivas.
+                  </p>
+                  <div
+                    class="flex items-center text-[10px] uppercase tracking-[1px] font-medium text-hub-gold mt-auto"
+                  >
+                    Explorar
+                    <i
+                      data-lucide="chevron-right"
+                      class="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition-transform"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="h-full perspective-[1000px] reveal-up" data-delay="400">
+              <div
+                data-id="arena"
+                class="tilt-card eco-trigger group cursor-pointer glass-panel overflow-hidden relative hover-trigger h-full transition-colors duration-300"
+              >
+                <div
+                  class="absolute inset-0 bg-gradient-to-br from-hub-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                ></div>
+                <div
+                  class="p-6 relative z-10 h-full flex flex-col min-h-[180px] transform-gpu translate-z-[30px]"
+                >
+                  <div
+                    class="w-10 h-10 rounded bg-hub-gold/10 flex items-center justify-center mb-4 text-hub-gold group-hover:scale-110 transition-transform duration-500"
+                  >
+                    <i data-lucide="dumbbell" class="w-5 h-5"></i>
+                  </div>
+                  <h3
+                    class="text-[12px] uppercase tracking-[1px] text-hub-gold mb-2 group-hover:text-hub-gold transition-colors"
+                  >
+                    Arena Avançar
+                  </h3>
+                  <p class="text-[10px] text-white/40 mb-6 flex-1">
+                    Espaço dedicado à performance física e mental dos membros.
+                  </p>
+                  <div
+                    class="flex items-center text-[10px] uppercase tracking-[1px] font-medium text-hub-gold mt-auto"
+                  >
+                    Explorar
+                    <i
+                      data-lucide="chevron-right"
+                      class="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition-transform"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="h-full perspective-[1000px] reveal-up" data-delay="500">
+              <div
+                data-id="qualidade"
+                class="tilt-card eco-trigger group cursor-pointer glass-panel overflow-hidden relative hover-trigger h-full transition-colors duration-300"
+              >
+                <div
+                  class="absolute inset-0 bg-gradient-to-br from-hub-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                ></div>
+                <div
+                  class="p-6 relative z-10 h-full flex flex-col min-h-[180px] transform-gpu translate-z-[30px]"
+                >
+                  <div
+                    class="w-10 h-10 rounded bg-hub-gold/10 flex items-center justify-center mb-4 text-hub-gold group-hover:scale-110 transition-transform duration-500"
+                  >
+                    <i data-lucide="heart-pulse" class="w-5 h-5"></i>
+                  </div>
+                  <h3
+                    class="text-[12px] uppercase tracking-[1px] text-hub-gold mb-2 group-hover:text-hub-gold transition-colors"
+                  >
+                    Qualidade de Vida
+                  </h3>
+                  <p class="text-[10px] text-white/40 mb-6 flex-1">
+                    Serviços premium para o bem-estar integral do empreendedor.
+                  </p>
+                  <div
+                    class="flex items-center text-[10px] uppercase tracking-[1px] font-medium text-hub-gold mt-auto"
+                  >
+                    Explorar
+                    <i
+                      data-lucide="chevron-right"
+                      class="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition-transform"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Eco Drawer -->
+      <div id="eco-modal" class="hidden">
+        <div
+          id="eco-backdrop"
+          class="fixed inset-0 z-[105] bg-hub-black/80 backdrop-blur-sm opacity-0 transition-opacity duration-300"
+        ></div>
+        <div
+          id="eco-drawer"
+          class="fixed top-0 right-0 bottom-0 w-full md:w-[450px] z-[110] bg-[#0A0A0A] border-l border-hub-gold/20 shadow-2xl flex flex-col overflow-hidden translate-x-full transition-transform duration-500 ease-out"
+        >
+          <div class="relative h-48 shrink-0">
+            <img
+              id="eco-img"
+              src=""
+              class="absolute inset-0 w-full h-full object-cover opacity-30 grayscale"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] to-transparent"
+            ></div>
+            <button
+              id="eco-close"
+              class="absolute top-6 right-6 w-8 h-8 rounded bg-white/5 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors z-10"
+            >
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+            <div class="absolute bottom-6 left-8 flex items-center gap-4">
+              <div
+                id="eco-icon-container"
+                class="w-12 h-12 rounded bg-hub-gold/20 backdrop-blur-md flex items-center justify-center text-hub-gold border border-hub-gold/30"
+              ></div>
+              <h3
+                id="eco-title"
+                class="heading-minimal text-3xl text-white m-0"
+              ></h3>
+            </div>
+          </div>
+          <div class="p-8 overflow-y-auto no-scrollbar flex-1">
+            <p
+              id="eco-desc"
+              class="text-[14px] text-white/60 mb-10 leading-[1.6]"
+            ></p>
+            <h4 class="text-[10px] uppercase tracking-[2px] text-hub-gold mb-6">
+              Soluções Inclusas
+            </h4>
+            <div id="eco-items" class="flex flex-col gap-3"></div>
+            <button id="eco-extra-btn" class="mt-10 w-full btn-minimal hidden">
+              Acessar Clube Avançar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Scroll -->
+      <section id="experiencia" class="relative h-[300vh] bg-hub-black">
+        <div
+          class="sticky top-0 min-h-screen w-full flex flex-col justify-center py-20 pb-24 lg:py-0 overflow-hidden"
+        >
+          <div
+            class="max-w-7xl mx-auto px-6 md:px-12 w-full mb-8 lg:mb-12 reveal-left"
+          >
+            <h2 class="heading-minimal text-4xl md:text-[48px]">
+              A Experiência
+              <span class="text-hub-gold font-semibold">Avançar</span>
+            </h2>
+            <p
+              class="text-[16px] text-white/60 mt-2 md:mt-4 max-w-[400px] leading-[1.6]"
+            >
+              Mergulhe na rotina do ecossistema mais completo do Brasil.
+            </p>
+          </div>
+          <div
+            id="video-scroll-container"
+            class="flex gap-6 px-6 md:px-12 w-max items-center transition-transform duration-75 ease-linear"
+          >
+            <div
+              class="group relative h-[45vh] min-h-[280px] md:min-h-[350px] max-h-[500px] w-auto aspect-[9/16] glass-panel overflow-hidden shrink-0 cursor-pointer hover-trigger p-0"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=800&auto=format&fit=crop"
+                class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-700 ease-out grayscale group-hover:grayscale-0"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-hub-black via-hub-black/40 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500"
+              ></div>
+              <div
+                class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-90 group-hover:scale-100"
+              >
+                <div
+                  class="w-16 h-16 rounded-full bg-hub-gold/90 backdrop-blur-sm flex items-center justify-center text-hub-black pl-1"
+                >
+                  <i data-lucide="play" fill="currentColor"></i>
+                </div>
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
+              >
+                <h3
+                  class="text-[18px] font-light tracking-[-0.02em] text-white mb-1 drop-shadow-lg"
+                >
+                  Vida no HUB
+                </h3>
+                <p
+                  class="text-[12px] text-white/60 drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100"
+                >
+                  O dia a dia da alta performance
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="group relative h-[45vh] min-h-[280px] md:min-h-[350px] max-h-[500px] w-auto aspect-[9/16] glass-panel overflow-hidden shrink-0 cursor-pointer hover-trigger p-0"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop"
+                class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-700 ease-out grayscale group-hover:grayscale-0"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-hub-black via-hub-black/40 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500"
+              ></div>
+              <div
+                class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-90 group-hover:scale-100"
+              >
+                <div
+                  class="w-16 h-16 rounded-full bg-hub-gold/90 backdrop-blur-sm flex items-center justify-center text-hub-black pl-1"
+                >
+                  <i data-lucide="play" fill="currentColor"></i>
+                </div>
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
+              >
+                <h3
+                  class="text-[18px] font-light tracking-[-0.02em] text-white mb-1 drop-shadow-lg"
+                >
+                  Treinos na Arena
+                </h3>
+                <p
+                  class="text-[12px] text-white/60 drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100"
+                >
+                  Corpo forte, mente afiada
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="group relative h-[45vh] min-h-[280px] md:min-h-[350px] max-h-[500px] w-auto aspect-[9/16] glass-panel overflow-hidden shrink-0 cursor-pointer hover-trigger p-0"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=800&auto=format&fit=crop"
+                class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-700 ease-out grayscale group-hover:grayscale-0"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-hub-black via-hub-black/40 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500"
+              ></div>
+              <div
+                class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-90 group-hover:scale-100"
+              >
+                <div
+                  class="w-16 h-16 rounded-full bg-hub-gold/90 backdrop-blur-sm flex items-center justify-center text-hub-black pl-1"
+                >
+                  <i data-lucide="play" fill="currentColor"></i>
+                </div>
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
+              >
+                <h3
+                  class="text-[18px] font-light tracking-[-0.02em] text-white mb-1 drop-shadow-lg"
+                >
+                  Eventos Exclusivos
+                </h3>
+                <p
+                  class="text-[12px] text-white/60 drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100"
+                >
+                  Conexões que geram milhões
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="group relative h-[45vh] min-h-[280px] md:min-h-[350px] max-h-[500px] w-auto aspect-[9/16] glass-panel overflow-hidden shrink-0 cursor-pointer hover-trigger p-0"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=800&auto=format&fit=crop"
+                class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-700 ease-out grayscale group-hover:grayscale-0"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-hub-black via-hub-black/40 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500"
+              ></div>
+              <div
+                class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-90 group-hover:scale-100"
+              >
+                <div
+                  class="w-16 h-16 rounded-full bg-hub-gold/90 backdrop-blur-sm flex items-center justify-center text-hub-black pl-1"
+                >
+                  <i data-lucide="play" fill="currentColor"></i>
+                </div>
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
+              >
+                <h3
+                  class="text-[18px] font-light tracking-[-0.02em] text-white mb-1 drop-shadow-lg"
+                >
+                  Bastidores
+                </h3>
+                <p
+                  class="text-[12px] text-white/60 drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100"
+                >
+                  Como o ecossistema opera
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="group relative h-[45vh] min-h-[280px] md:min-h-[350px] max-h-[500px] w-auto aspect-[9/16] glass-panel overflow-hidden shrink-0 cursor-pointer hover-trigger p-0"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1553025596-1ab20210246f?q=80&w=800&auto=format&fit=crop"
+                class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-700 ease-out grayscale group-hover:grayscale-0"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-hub-black via-hub-black/40 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500"
+              ></div>
+              <div
+                class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-90 group-hover:scale-100"
+              >
+                <div
+                  class="w-16 h-16 rounded-full bg-hub-gold/90 backdrop-blur-sm flex items-center justify-center text-hub-black pl-1"
+                >
+                  <i data-lucide="play" fill="currentColor"></i>
+                </div>
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
+              >
+                <h3
+                  class="text-[18px] font-light tracking-[-0.02em] text-white mb-1 drop-shadow-lg"
+                >
+                  Pitch Day
+                </h3>
+                <p
+                  class="text-[12px] text-white/60 drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100"
+                >
+                  Startups e Investidores Anjo
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Agenda -->
+      <section
+        id="agenda"
+        class="py-32 bg-[#050505] relative border-t border-white/5"
+      >
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+          <div
+            class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
+          >
+            <div class="reveal-up">
+              <h2 class="heading-minimal text-4xl md:text-[48px] mb-4">
+                Agenda
+                <span class="text-hub-gold font-semibold">Exclusiva</span>
+              </h2>
+              <p class="text-[16px] text-white/60 leading-[1.6]">
+                Eventos desenhados para gerar conexões de alto valor.
+              </p>
+            </div>
+            <button
+              id="full-calendar-btn"
+              class="reveal-up text-[11px] uppercase tracking-[0.2em] text-hub-gold hover:text-white transition-colors flex items-center gap-2"
+            >
+              Ver calendário completo
+            </button>
+          </div>
+          <div class="relative">
+            <div
+              class="absolute top-1/2 left-0 right-0 h-px bg-white/10 -translate-y-1/2 hidden lg:block"
+            ></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div
+                class="relative group cursor-pointer hover-trigger agenda-trigger reveal-up"
+                data-delay="0"
+                data-id="1"
+              >
+                <div
+                  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-hub-black border border-hub-gold z-10 hidden lg:block group-hover:scale-150 group-hover:bg-hub-gold transition-all duration-300"
+                ></div>
+                <div
+                  class="glass-panel p-6 lg:mt-12 group-hover:-translate-y-2 transition-transform duration-300 group-hover:border-hub-gold/40"
+                >
+                  <div
+                    class="text-[10px] text-hub-gold mb-4 tracking-[2px] uppercase"
+                  >
+                    15 Mar
+                  </div>
+                  <h3
+                    class="text-[16px] font-light tracking-[-0.02em] text-white mb-2"
+                  >
+                    Imersão Liderança 4.0
+                  </h3>
+                  <div
+                    class="flex items-center gap-2 text-[12px] text-white/50 mb-1"
+                  >
+                    <i data-lucide="calendar" class="w-3 h-3"></i> Educação
+                  </div>
+                  <div
+                    class="flex items-center gap-2 text-[12px] text-white/50"
+                  >
+                    <i data-lucide="map-pin" class="w-3 h-3"></i> Auditório
+                    Principal
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="relative group cursor-pointer hover-trigger agenda-trigger reveal-up"
+                data-delay="100"
+                data-id="2"
+              >
+                <div
+                  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-hub-black border border-hub-gold z-10 hidden lg:block group-hover:scale-150 group-hover:bg-hub-gold transition-all duration-300"
+                ></div>
+                <div
+                  class="glass-panel p-6 lg:mt-12 group-hover:-translate-y-2 transition-transform duration-300 group-hover:border-hub-gold/40"
+                >
+                  <div
+                    class="text-[10px] text-hub-gold mb-4 tracking-[2px] uppercase"
+                  >
+                    22 Mar
+                  </div>
+                  <h3
+                    class="text-[16px] font-light tracking-[-0.02em] text-white mb-2"
+                  >
+                    Pitch Day Startups
+                  </h3>
+                  <div
+                    class="flex items-center gap-2 text-[12px] text-white/50 mb-1"
+                  >
+                    <i data-lucide="calendar" class="w-3 h-3"></i> Vale Avançar
+                  </div>
+                  <div
+                    class="flex items-center gap-2 text-[12px] text-white/50"
+                  >
+                    <i data-lucide="map-pin" class="w-3 h-3"></i> Lounge
+                    Inovação
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="relative group cursor-pointer hover-trigger agenda-trigger reveal-up"
+                data-delay="200"
+                data-id="3"
+              >
+                <div
+                  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-hub-black border border-hub-gold z-10 hidden lg:block group-hover:scale-150 group-hover:bg-hub-gold transition-all duration-300"
+                ></div>
+                <div
+                  class="glass-panel p-6 lg:mt-12 group-hover:-translate-y-2 transition-transform duration-300 group-hover:border-hub-gold/40"
+                >
+                  <div
+                    class="text-[10px] text-hub-gold mb-4 tracking-[2px] uppercase"
+                  >
+                    05 Abr
+                  </div>
+                  <h3
+                    class="text-[16px] font-light tracking-[-0.02em] text-white mb-2"
+                  >
+                    Torneio de Pickleball
+                  </h3>
+                  <div
+                    class="flex items-center gap-2 text-[12px] text-white/50 mb-1"
+                  >
+                    <i data-lucide="calendar" class="w-3 h-3"></i> Arena
+                  </div>
+                  <div
+                    class="flex items-center gap-2 text-[12px] text-white/50"
+                  >
+                    <i data-lucide="map-pin" class="w-3 h-3"></i> Quadras
+                    Avançar
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="relative group cursor-pointer hover-trigger agenda-trigger reveal-up"
+                data-delay="300"
+                data-id="4"
+              >
+                <div
+                  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-hub-black border border-hub-gold z-10 hidden lg:block group-hover:scale-150 group-hover:bg-hub-gold transition-all duration-300"
+                ></div>
+                <div
+                  class="glass-panel p-6 lg:mt-12 group-hover:-translate-y-2 transition-transform duration-300 group-hover:border-hub-gold/40"
+                >
+                  <div
+                    class="text-[10px] text-hub-gold mb-4 tracking-[2px] uppercase"
+                  >
+                    12 Abr
+                  </div>
+                  <h3
+                    class="text-[16px] font-light tracking-[-0.02em] text-white mb-2"
+                  >
+                    Jantar de Negócios
+                  </h3>
+                  <div
+                    class="flex items-center gap-2 text-[12px] text-white/50 mb-1"
+                  >
+                    <i data-lucide="calendar" class="w-3 h-3"></i> Clubes
+                  </div>
+                  <div
+                    class="flex items-center gap-2 text-[12px] text-white/50"
+                  >
+                    <i data-lucide="map-pin" class="w-3 h-3"></i> Rooftop
+                    Avançar
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Agenda Event Modal -->
+      <div
+        id="agenda-modal"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-hub-black/80 backdrop-blur-md transition-opacity duration-300 opacity-0 pointer-events-none hidden"
+      >
+        <div
+          id="agenda-content"
+          class="relative w-full max-w-lg bg-[#0a0a0a] border border-white/10 rounded-[20px] p-8 md:p-10 shadow-2xl overflow-hidden transition-transform duration-300 scale-95 translate-y-5"
+        >
+          <div
+            class="absolute -top-32 -left-32 w-64 h-64 bg-hub-gold/20 rounded-full blur-[80px] pointer-events-none"
+          ></div>
+          <button
+            id="agenda-close"
+            class="absolute top-6 right-6 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors"
+          >
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+          <div
+            id="agenda-type"
+            class="inline-block px-3 py-1 bg-hub-gold/10 border border-hub-gold/20 rounded-full text-[10px] uppercase tracking-wider text-hub-gold mb-6 font-medium"
+          ></div>
+          <h3
+            id="agenda-title"
+            class="text-2xl md:text-3xl font-light text-white mb-4 tracking-tight"
+          ></h3>
+          <p
+            id="agenda-desc"
+            class="text-[15px] leading-relaxed text-white/70 mb-8 font-light"
+          ></p>
+          <div
+            class="flex flex-col gap-3 p-5 rounded-[12px] bg-white/5 border border-white/5"
+          >
+            <div class="flex items-center gap-3 text-[14px] text-white/80">
+              <i data-lucide="calendar" class="text-hub-gold w-4 h-4"></i
+              ><span id="agenda-date"></span>
+            </div>
+            <div class="flex items-center gap-3 text-[14px] text-white/80">
+              <i data-lucide="clock" class="text-hub-gold w-4 h-4"></i
+              ><span id="agenda-time"></span>
+            </div>
+            <div class="flex items-center gap-3 text-[14px] text-white/80">
+              <i data-lucide="map-pin" class="text-hub-gold w-4 h-4"></i
+              ><span id="agenda-loc"></span>
+            </div>
+          </div>
+          <div class="mt-8 flex justify-end">
+            <button class="btn-minimal text-sm">Garantir Convite</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calendar Modal -->
+      <div
+        id="calendar-modal"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-hub-black/80 backdrop-blur-md transition-opacity duration-300 opacity-0 pointer-events-none hidden"
+      >
+        <div
+          id="calendar-content"
+          class="relative w-full max-w-2xl bg-[#0a0a0a] border border-white/10 rounded-[20px] p-8 md:p-10 shadow-2xl overflow-hidden transition-transform duration-300 scale-95 translate-y-5"
+        >
+          <div
+            class="absolute -top-32 -right-32 w-80 h-80 bg-hub-gold/10 rounded-full blur-[100px] pointer-events-none"
+          ></div>
+          <button
+            id="calendar-close"
+            class="absolute top-6 right-6 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors"
+          >
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+          <h3
+            class="text-2xl md:text-3xl font-light text-white mb-2 tracking-tight"
+          >
+            Calendário Anual Completo
+          </h3>
+          <p class="text-[15px] text-white/60 mb-8 font-light">
+            Programação sincronizada e restrita aos membros do ecossistema
+            Avançar.
+          </p>
+          <div class="space-y-4">
+            <div
+              class="flex items-center justify-between p-5 rounded-[12px] bg-white/5 border border-white/5"
+            >
+              <div class="flex flex-col">
+                <span class="text-white font-medium">Q2 2026</span
+                ><span class="text-[13px] text-white/50 mt-1">12 Eventos</span>
+              </div>
+              <span
+                class="text-[11px] uppercase tracking-wider font-semibold text-hub-gold"
+                >Últimas Vagas</span
+              >
+            </div>
+            <div
+              class="flex items-center justify-between p-5 rounded-[12px] bg-white/5 border border-white/5"
+            >
+              <div class="flex flex-col">
+                <span class="text-white font-medium">Q3 2026</span
+                ><span class="text-[13px] text-white/50 mt-1">16 Eventos</span>
+              </div>
+              <span
+                class="text-[11px] uppercase tracking-wider font-semibold text-white/40"
+                >Restrito</span
+              >
+            </div>
+            <div
+              class="flex items-center justify-between p-5 rounded-[12px] bg-white/5 border border-white/5"
+            >
+              <div class="flex flex-col">
+                <span class="text-white font-medium">Q4 2026</span
+                ><span class="text-[13px] text-white/50 mt-1"
+                  >Avançar Summit</span
+                >
+              </div>
+              <span
+                class="text-[11px] uppercase tracking-wider font-semibold text-white/40"
+                >Em Breve</span
+              >
+            </div>
+          </div>
+          <div
+            class="mt-8 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4"
+          >
+            <p class="text-[13px] text-white/40 max-w-[280px]">
+              Para acessar a agenda completa e sincronizar com seu calendário,
+              faça login na plataforma.
+            </p>
+            <button
+              id="calendar-access-btn"
+              class="btn-minimal whitespace-nowrap text-sm"
+            >
+              Acessar Plataforma
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonials -->
+      <section
+        id="depoimentos"
+        class="py-32 bg-hub-black relative overflow-hidden"
+      >
+        <div
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-hub-gold/5 rounded-full blur-[120px] pointer-events-none"
+        ></div>
+        <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+          <div class="text-center mb-20 reveal-up">
+            <h2 class="heading-minimal text-4xl md:text-[48px] mb-6">
+              Quem já está
+              <span class="text-hub-gold font-semibold">Avançando</span>
+            </h2>
+            <p
+              class="text-[16px] text-white/60 max-w-[400px] mx-auto leading-[1.6]"
+            >
+              A força de um ecossistema se mede pelos resultados de seus
+              membros.
+            </p>
+          </div>
+          <div class="grid md:grid-cols-3 gap-8">
+            <div
+              class="glass-panel p-8 relative hover:bg-white/5 transition-colors duration-300 reveal-up"
+              data-delay="0"
+            >
+              <i
+                data-lucide="quote"
+                class="absolute top-8 right-8 text-hub-gold/20 w-8 h-8"
+              ></i>
+              <p
+                class="text-[14px] text-white/60 leading-[1.6] mb-8 relative z-10 font-light"
+              >
+                "O HUB Avançar não é apenas um espaço físico, é um acelerador de
+                resultados. Fechei dois contratos milionários no primeiro mês
+                apenas no networking do café."
+              </p>
+              <div class="flex items-center gap-4">
+                <img
+                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=256&auto=format&fit=crop"
+                  alt="Ricardo Mendes"
+                  class="w-10 h-10 rounded-full object-cover border border-hub-gold/50 grayscale"
+                />
+                <div>
+                  <h4 class="text-[12px] font-medium text-white">
+                    Ricardo Mendes
+                  </h4>
+                  <p
+                    class="text-[10px] uppercase tracking-[1px] text-hub-gold mt-1"
+                  >
+                    CEO, TechCorp
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="glass-panel p-8 relative hover:bg-white/5 transition-colors duration-300 reveal-up"
+              data-delay="200"
+            >
+              <i
+                data-lucide="quote"
+                class="absolute top-8 right-8 text-hub-gold/20 w-8 h-8"
+              ></i>
+              <p
+                class="text-[14px] text-white/60 leading-[1.6] mb-8 relative z-10 font-light"
+              >
+                "A infraestrutura é impecável. Ter contabilidade, jurídico e
+                investidores no mesmo prédio mudou a velocidade com que minha
+                startup opera."
+              </p>
+              <div class="flex items-center gap-4">
+                <img
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=256&auto=format&fit=crop"
+                  alt="Amanda Silva"
+                  class="w-10 h-10 rounded-full object-cover border border-hub-gold/50 grayscale"
+                />
+                <div>
+                  <h4 class="text-[12px] font-medium text-white">
+                    Amanda Silva
+                  </h4>
+                  <p
+                    class="text-[10px] uppercase tracking-[1px] text-hub-gold mt-1"
+                  >
+                    Fundadora, HealthTech
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="glass-panel p-8 relative hover:bg-white/5 transition-colors duration-300 reveal-up"
+              data-delay="400"
+            >
+              <i
+                data-lucide="quote"
+                class="absolute top-8 right-8 text-hub-gold/20 w-8 h-8"
+              ></i>
+              <p
+                class="text-[14px] text-white/60 leading-[1.6] mb-8 relative z-10 font-light"
+              >
+                "O nível das pessoas que frequentam o HUB é o diferencial. Aqui
+                o deal flow é qualificado e as conversas são sempre em alto
+                nível."
+              </p>
+              <div class="flex items-center gap-4">
+                <img
+                  src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=256&auto=format&fit=crop"
+                  alt="Carlos Eduardo"
+                  class="w-10 h-10 rounded-full object-cover border border-hub-gold/50 grayscale"
+                />
+                <div>
+                  <h4 class="text-[12px] font-medium text-white">
+                    Carlos Eduardo
+                  </h4>
+                  <p
+                    class="text-[10px] uppercase tracking-[1px] text-hub-gold mt-1"
+                  >
+                    Investidor Anjo
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Blog Section -->
+      <section id="blog" class="py-32 relative z-10 bg-hub-black">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+          <div
+            class="mb-16 md:mb-20 flex flex-col md:flex-row md:items-end justify-between gap-6"
+          >
+            <div class="reveal-left">
+              <h2 class="heading-minimal text-4xl md:text-[48px]">
+                Insights do <span class="text-hub-gold font-semibold">HUB</span>
+              </h2>
+              <p
+                class="text-[16px] text-white/60 mt-4 max-w-[400px] leading-[1.6]"
+              >
+                Artigos, tendências e análises diretas do ecossistema que mais
+                cresce no país.
+              </p>
+            </div>
+            <button class="btn-minimal max-w-max reveal-up">
+              Ver todos os artigos
+            </button>
+          </div>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <article
+              class="glass-panel overflow-hidden group p-0 flex flex-col reveal-up"
+              data-delay="0"
+            >
+              <div class="relative h-56 overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1556761175-4b46a572b786?q=80&w=800&auto=format&fit=crop"
+                  alt="O Futuro do Networking: Como construir conexões de valor"
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div
+                  class="absolute top-4 left-4 bg-hub-black/80 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10"
+                >
+                  <span
+                    class="text-[10px] uppercase tracking-wider text-hub-gold font-medium"
+                    >Networking</span
+                  >
+                </div>
+              </div>
+              <div class="p-8 flex flex-col flex-1">
+                <span class="text-[12px] text-white/40 mb-3 block"
+                  >15 Abr 2026</span
+                >
+                <h3
+                  class="text-xl font-light tracking-[-0.01em] text-white mb-4 line-clamp-2 hover:text-hub-gold transition-colors cursor-pointer"
+                >
+                  O Futuro do Networking: Como construir conexões de valor
+                </h3>
+                <p
+                  class="text-[14px] text-white/60 leading-[1.6] line-clamp-3 mb-6"
+                >
+                  Descubra as estratégias usadas pelos maiores líderes do
+                  mercado para transformar contatos em contratos milionários.
+                </p>
+                <div class="mt-auto">
+                  <button
+                    class="flex items-center gap-2 text-[12px] uppercase tracking-[2px] text-hub-gold font-medium hover:text-white transition-colors"
+                  >
+                    Ler Mais
+                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <article
+              class="glass-panel overflow-hidden group p-0 flex flex-col reveal-up"
+              data-delay="100"
+            >
+              <div class="relative h-56 overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop"
+                  alt="Aceleração Exponencial: O papel da infraestrutura"
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div
+                  class="absolute top-4 left-4 bg-hub-black/80 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10"
+                >
+                  <span
+                    class="text-[10px] uppercase tracking-wider text-hub-gold font-medium"
+                    >Negócios</span
+                  >
+                </div>
+              </div>
+              <div class="p-8 flex flex-col flex-1">
+                <span class="text-[12px] text-white/40 mb-3 block"
+                  >10 Abr 2026</span
+                >
+                <h3
+                  class="text-xl font-light tracking-[-0.01em] text-white mb-4 line-clamp-2 hover:text-hub-gold transition-colors cursor-pointer"
+                >
+                  Aceleração Exponencial: O papel da infraestrutura
+                </h3>
+                <p
+                  class="text-[14px] text-white/60 leading-[1.6] line-clamp-3 mb-6"
+                >
+                  Por que ter acesso a advogado, contador e investidor no mesmo
+                  andar pode antecipar seus resultados em anos.
+                </p>
+                <div class="mt-auto">
+                  <button
+                    class="flex items-center gap-2 text-[12px] uppercase tracking-[2px] text-hub-gold font-medium hover:text-white transition-colors"
+                  >
+                    Ler Mais
+                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <article
+              class="glass-panel overflow-hidden group p-0 flex flex-col reveal-up"
+              data-delay="200"
+            >
+              <div class="relative h-56 overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop"
+                  alt="Mindset da Alta Performance: Muito além dos negócios"
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div
+                  class="absolute top-4 left-4 bg-hub-black/80 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10"
+                >
+                  <span
+                    class="text-[10px] uppercase tracking-wider text-hub-gold font-medium"
+                    >Lifestyle</span
+                  >
+                </div>
+              </div>
+              <div class="p-8 flex flex-col flex-1">
+                <span class="text-[12px] text-white/40 mb-3 block"
+                  >05 Abr 2026</span
+                >
+                <h3
+                  class="text-xl font-light tracking-[-0.01em] text-white mb-4 line-clamp-2 hover:text-hub-gold transition-colors cursor-pointer"
+                >
+                  Mindset da Alta Performance: Muito além dos negócios
+                </h3>
+                <p
+                  class="text-[14px] text-white/60 leading-[1.6] line-clamp-3 mb-6"
+                >
+                  Como manter o equilíbrio perfeito entre saúde, inteligência
+                  emocional e agressividade comercial no mercado atual.
+                </p>
+                <div class="mt-auto">
+                  <button
+                    class="flex items-center gap-2 text-[12px] uppercase tracking-[2px] text-hub-gold font-medium hover:text-white transition-colors"
+                  >
+                    Ler Mais
+                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#0A0A0A] pt-20 pb-10 border-t border-white/5 text-white">
+      <div class="max-w-7xl mx-auto px-6 md:px-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+          <div class="md:col-span-2">
+            <a
+              href="#"
+              class="text-[18px] font-bold tracking-[4px] uppercase text-hub-gold flex items-center gap-2 mb-6"
+              >HUB AVANÇAR</a
+            >
+            <p class="text-[14px] text-white/60 max-w-sm mb-8 leading-[1.6]">
+              O ecossistema definitivo para quem busca alta performance,
+              conexões de valor e crescimento exponencial.
+            </p>
+            <button class="btn-minimal !px-6 !py-3 !text-[10px] w-fit">
+              Seja um Membro
+            </button>
+          </div>
+          <div>
+            <h4 class="text-[12px] uppercase tracking-[2px] text-white mb-6">
+              Ecossistema
+            </h4>
+            <ul class="space-y-4 text-[12px] text-white/50">
+              <li>
+                <a href="#" class="hover:text-hub-gold transition-colors"
+                  >Negócios</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-hub-gold transition-colors"
+                  >Educação</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-hub-gold transition-colors"
+                  >Clubes</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-hub-gold transition-colors"
+                  >Vale Avançar</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-hub-gold transition-colors"
+                  >Arena</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-[12px] uppercase tracking-[2px] text-white mb-6">
+              Contato
+            </h4>
+            <ul class="space-y-4 text-[12px] text-white/50">
+              <li>Av. Faria Lima, 3000 - SP</li>
+              <li>contato@hubavancar.com.br</li>
+              <li>+55 11 9999-9999</li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-[10px] uppercase tracking-[1px] text-white/40"
+        >
+          <p>© 2026 HUB Avançar. Todos os direitos reservados.</p>
+          <div class="flex gap-6">
+            <a href="#" class="hover:text-white transition-colors"
+              >Termos de Uso</a
+            >
+            <a href="#" class="hover:text-white transition-colors"
+              >Privacidade</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a
+      href="https://wa.me/5511999999999?text=Olá!%20Quero%20conhecer%20o%20HUB%20Avançar."
+      target="_blank"
+      rel="noopener noreferrer"
+      class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-50 group hover-trigger reveal-scale"
+      data-delay="1000"
+    >
+      <div
+        class="absolute inset-0 bg-[#25D366] rounded-full animate-ping opacity-20 group-hover:opacity-40 transition-opacity"
+      ></div>
+      <div
+        class="relative w-[60px] h-[60px] bg-[#25D366] rounded-full flex items-center justify-center text-white shadow-[0_10px_30px_rgba(37,211,102,0.3)] hover:scale-110 transition-transform duration-300"
+      >
+        <i data-lucide="message-circle" class="w-8 h-8"></i>
+      </div>
+    </a>
+
+    <!-- Vanilla JavaScript Injected Locally -->
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Setup Intersection Observer for reveal animations
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setTimeout(
+                () => {
+                  entry.target.classList.add("is-revealed");
+                },
+                entry.target.dataset.delay
+                  ? parseInt(entry.target.dataset.delay)
+                  : 0,
+              );
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "-50px" },
+      );
+
+      document
+        .querySelectorAll(".reveal-up, .reveal-left, .reveal-scale")
+        .forEach((el) => observer.observe(el));
+
+      // Navbar Scroll Effect
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add("py-3", "lg:py-4");
+          navbar.classList.remove("py-4", "md:py-5", "lg:py-8");
+        } else {
+          navbar.classList.remove("py-3", "lg:py-4");
+          navbar.classList.add("py-4", "md:py-5", "lg:py-8");
+        }
+      });
+
+      // Mobile Menu
+      const mobileMenuOpen = document.getElementById("mobile-menu-open");
+      const mobileMenuClose = document.getElementById("mobile-menu-close");
+      const mobileMenuDrawer = document.getElementById("mobile-menu-drawer");
+      const mobileMenuBackdrop = document.getElementById(
+        "mobile-menu-backdrop",
+      );
+      const navLinks = document.querySelectorAll(".nav-link");
+
+      function closeMobileMenu() {
+        if (!mobileMenuDrawer) return;
+        mobileMenuDrawer.style.transform = "translateX(100%)";
+        mobileMenuBackdrop.style.opacity = "0";
+        mobileMenuBackdrop.style.pointerEvents = "none";
       }
 
-      // --- Render ---
-      createRoot(document.getElementById("root")).render(
-        <StrictMode>
-          <App />
-        </StrictMode>,
-      );
+      if (mobileMenuOpen)
+        mobileMenuOpen.addEventListener("click", () => {
+          mobileMenuDrawer.style.transform = "translateX(0)";
+          mobileMenuBackdrop.style.opacity = "1";
+          mobileMenuBackdrop.style.pointerEvents = "auto";
+        });
+      if (mobileMenuClose)
+        mobileMenuClose.addEventListener("click", closeMobileMenu);
+      if (mobileMenuBackdrop)
+        mobileMenuBackdrop.addEventListener("click", closeMobileMenu);
+
+      navLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          closeMobileMenu();
+          const targetId = link.getAttribute("href");
+          if (targetId === "#") {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          } else {
+            const element = document.querySelector(targetId);
+            if (element) {
+              const headerOffset = 80;
+              const elementPosition = element.getBoundingClientRect().top;
+              const offsetPosition =
+                elementPosition + window.scrollY - headerOffset;
+              window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+            }
+          }
+        });
+      });
+
+      // Ecosystem Tilt Effects
+      const tiltCards = document.querySelectorAll(".tilt-card");
+      tiltCards.forEach((card) => {
+        card.addEventListener("mousemove", (e) => {
+          const rect = card.getBoundingClientRect();
+          const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+          const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+          const rotateX = yPct * -30;
+          const rotateY = xPct * 30;
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        card.addEventListener("mouseleave", () => {
+          card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+        });
+      });
+
+      // Ecosystem Drawer Data
+      const ecosystemData = {
+        negocios: {
+          title: "Negócios",
+          icon: "briefcase",
+          description:
+            "Soluções completas para estruturação e escala corporativa.",
+          items: [
+            "Contábil",
+            "Tributário",
+            "Financeiro",
+            "Jurídico",
+            "Marketing",
+            "Tecnologia",
+            "Vendas",
+            "Comunicação",
+            "Pessoas",
+            "Cultura",
+            "Governança",
+            "Investimentos",
+          ],
+          image:
+            "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?q=80&w=800&auto=format&fit=crop",
+        },
+        educacao: {
+          title: "Educação",
+          icon: "graduation-cap",
+          description:
+            "Formação contínua para líderes e executivos de alto impacto.",
+          items: [
+            "Especialista Comportamental",
+            "Oratória",
+            "Liderança",
+            "Gestão Empresarial",
+            "IA para negócios",
+            "Inglês",
+            "Investidor Anjo",
+          ],
+          image:
+            "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&auto=format&fit=crop",
+        },
+        clubes: {
+          title: "Clubes",
+          icon: "users",
+          description:
+            "Comunidades exclusivas para networking e geração de negócios.",
+          items: [
+            "Clube Avançar",
+            "Clube do Investidor",
+            "Clube do Construtor",
+          ],
+          image:
+            "https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=800&auto=format&fit=crop",
+        },
+        vale: {
+          title: "Vale Avançar",
+          icon: "rocket",
+          description:
+            "O epicentro da inovação, conectando capital a ideias disruptivas.",
+          items: [
+            "Startups",
+            "Aceleração",
+            "Investimentos Anjo",
+            "Venture Capital",
+          ],
+          image:
+            "https://images.unsplash.com/photo-1553025596-1ab20210246f?q=80&w=800&auto=format&fit=crop",
+        },
+        arena: {
+          title: "Arena Avançar",
+          icon: "dumbbell",
+          description:
+            "Espaço dedicado à performance física e mental dos membros.",
+          items: ["Personal", "Lutas", "Pickleball"],
+          image:
+            "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop",
+        },
+        qualidade: {
+          title: "Qualidade de Vida",
+          icon: "heart-pulse",
+          description:
+            "Serviços premium para o bem-estar integral do empreendedor.",
+          items: [
+            "Massoterapia",
+            "Psicologia",
+            "Nutrição",
+            "Academia",
+            "Barbearia",
+          ],
+          image:
+            "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=800&auto=format&fit=crop",
+        },
+      };
+
+      const ecoModal = document.getElementById("eco-modal");
+      const ecoBackdrop = document.getElementById("eco-backdrop");
+      const ecoDrawer = document.getElementById("eco-drawer");
+      const ecoClose = document.getElementById("eco-close");
+      const ecoExtraBtn = document.getElementById("eco-extra-btn");
+
+      document.querySelectorAll(".eco-trigger").forEach((trigger) => {
+        trigger.addEventListener("click", () => {
+          const id = trigger.dataset.id;
+          const data = ecosystemData[id];
+
+          document.getElementById("eco-img").src = data.image;
+          document.getElementById("eco-title").innerText = data.title;
+          document.getElementById("eco-desc").innerText = data.description;
+
+          const iconContainer = document.getElementById("eco-icon-container");
+          iconContainer.innerHTML = `<i data-lucide="${data.icon}" class="w-6 h-6"></i>`;
+          lucide.createIcons({ root: iconContainer });
+
+          const ul = document.getElementById("eco-items");
+          ul.innerHTML = "";
+          data.items.forEach((it) => {
+            ul.innerHTML += `<div class="flex items-center gap-3 p-4 rounded bg-white/[0.02] border border-white/5"><div class="w-1 h-1 rounded-full bg-hub-gold"></div><span class="text-[12px] text-white/80">${it}</span></div>`;
+          });
+
+          if (id === "clubes") {
+            ecoExtraBtn.classList.remove("hidden");
+          } else {
+            ecoExtraBtn.classList.add("hidden");
+          }
+
+          ecoModal.classList.remove("hidden");
+          void ecoModal.offsetWidth;
+          ecoBackdrop.style.opacity = "1";
+          ecoDrawer.style.transform = "translateX(0)";
+        });
+      });
+
+      function closeEcoModal() {
+        ecoBackdrop.style.opacity = "0";
+        ecoDrawer.style.transform = "translateX(100%)";
+        setTimeout(() => {
+          ecoModal.classList.add("hidden");
+        }, 300);
+      }
+      if (ecoBackdrop) ecoBackdrop.addEventListener("click", closeEcoModal);
+      if (ecoClose) ecoClose.addEventListener("click", closeEcoModal);
+
+      // Horizontal Scroll (Video Scroll)
+      window.addEventListener("scroll", () => {
+        const section = document.getElementById("experiencia");
+        const container = document.getElementById("video-scroll-container");
+        if (!section || !container) return;
+        const rect = section.getBoundingClientRect();
+        const maxScroll = section.offsetHeight - window.innerHeight;
+        const scrollProgress = Math.max(0, Math.min(1, -rect.top / maxScroll));
+        container.style.transform = `translateX(${scrollProgress * -60}%)`;
+      });
+
+      // Events & Agenda Modals
+      const eventData = {
+        1: {
+          date: "15 Mar",
+          time: "09:00 - 18:00",
+          type: "Educação",
+          title: "Imersão Liderança 4.0",
+          loc: "Auditório Principal",
+          desc: "Uma imersão completa de um dia inteiro focada no desenvolvimento de habilidades de liderança para o cenário de inovação atual.",
+        },
+        2: {
+          date: "22 Mar",
+          time: "14:00 - 20:00",
+          type: "Vale Avançar",
+          title: "Pitch Day Startups",
+          loc: "Lounge Inovação",
+          desc: "O momento ideal onde as startups do nosso ecossistema apresentam suas teses para uma seleta banca de investidores.",
+        },
+        3: {
+          date: "05 Abr",
+          time: "08:00 - 12:00",
+          type: "Arena",
+          title: "Torneio de Pickleball",
+          loc: "Quadras Avançar",
+          desc: "Equilíbrio perfeito entre esporte e networking de alto nível.",
+        },
+        4: {
+          date: "12 Abr",
+          time: "20:00 - 23:30",
+          type: "Clubes",
+          title: "Jantar de Negócios",
+          loc: "Rooftop Avançar",
+          desc: "Jantar exclusivo e fechado. Uma noite inesquecível de alta gastronomia, harmonizada com vinhos premiados e conversas desenhadas para gerar conexões milionárias.",
+        },
+      };
+
+      const agendaModal = document.getElementById("agenda-modal");
+      const agendaContent = document.getElementById("agenda-content");
+
+      document.querySelectorAll(".agenda-trigger").forEach((trigger) => {
+        trigger.addEventListener("click", () => {
+          const data = eventData[trigger.dataset.id];
+          document.getElementById("agenda-type").innerText = data.type;
+          document.getElementById("agenda-title").innerText = data.title;
+          document.getElementById("agenda-desc").innerText = data.desc;
+          document.getElementById("agenda-date").innerText = data.date;
+          document.getElementById("agenda-time").innerText = data.time;
+          document.getElementById("agenda-loc").innerText = data.loc;
+
+          agendaModal.classList.remove("hidden");
+          void agendaModal.offsetWidth;
+          agendaModal.classList.remove("opacity-0", "pointer-events-none");
+          agendaContent.style.transform = "scale(1) translateY(0)";
+        });
+      });
+
+      function closeAgendaModal() {
+        if (!agendaModal) return;
+        agendaModal.classList.add("opacity-0", "pointer-events-none");
+        agendaContent.style.transform = "scale(0.95) translateY(20px)";
+        setTimeout(() => agendaModal.classList.add("hidden"), 300);
+      }
+      document
+        .getElementById("agenda-close")
+        ?.addEventListener("click", closeAgendaModal);
+      agendaModal?.addEventListener("click", (e) => {
+        if (e.target === agendaModal) closeAgendaModal();
+      });
+
+      // Full Calendar Modal
+      const calendarBtn = document.getElementById("full-calendar-btn");
+      const calendarModal = document.getElementById("calendar-modal");
+      const calendarContent = document.getElementById("calendar-content");
+
+      if (calendarBtn) {
+        calendarBtn.addEventListener("click", () => {
+          calendarModal.classList.remove("hidden");
+          void calendarModal.offsetWidth;
+          calendarModal.classList.remove("opacity-0", "pointer-events-none");
+          calendarContent.style.transform = "scale(1) translateY(0)";
+        });
+      }
+      function closeCalendarModal() {
+        if (!calendarModal) return;
+        calendarModal.classList.add("opacity-0", "pointer-events-none");
+        calendarContent.style.transform = "scale(0.95) translateY(20px)";
+        setTimeout(() => calendarModal.classList.add("hidden"), 300);
+      }
+      document
+        .getElementById("calendar-close")
+        ?.addEventListener("click", closeCalendarModal);
+      calendarModal?.addEventListener("click", (e) => {
+        if (e.target === calendarModal) closeCalendarModal();
+      });
+
+      // Particles Canvas
+      const canvas = document.getElementById("particles-canvas");
+      if (canvas) {
+        const ctx = canvas.getContext("2d");
+        let particles = [];
+        const mouse = { x: -1000, y: -1000 };
+
+        function resize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+          initParticles();
+        }
+
+        class Particle {
+          constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.baseX = this.x;
+            this.baseY = this.y;
+            this.size = Math.random() * 2 + 0.5;
+            this.density = Math.random() * 30 + 1;
+            this.color = Math.random() > 0.5 ? "#C6A75E" : "#FFFFFF";
+            this.alpha = Math.random() * 0.5 + 0.1;
+          }
+          draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.globalAlpha = this.alpha;
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = this.color;
+            ctx.fill();
+            ctx.globalAlpha = 1;
+            ctx.shadowBlur = 0;
+          }
+          update() {
+            this.baseX += Math.sin(Date.now() * 0.001 + this.density) * 0.2;
+            this.baseY += Math.cos(Date.now() * 0.002 + this.density) * 0.2;
+
+            let dx = mouse.x - this.x;
+            let dy = mouse.y - this.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            let forceDirectionX = dx / distance;
+            let forceDirectionY = dy / distance;
+            let maxDistance = 150;
+            let force = (maxDistance - distance) / maxDistance;
+
+            if (distance < maxDistance) {
+              this.x -= forceDirectionX * force * this.density;
+              this.y -= forceDirectionY * force * this.density;
+            } else {
+              if (this.x !== this.baseX) this.x -= (this.x - this.baseX) / 20;
+              if (this.y !== this.baseY) this.y -= (this.y - this.baseY) / 20;
+            }
+            this.draw();
+          }
+        }
+
+        function initParticles() {
+          particles = [];
+          const numberOfParticles = (canvas.width * canvas.height) / 15000;
+          for (let i = 0; i < numberOfParticles; i++) {
+            particles.push(new Particle());
+          }
+        }
+
+        function animate() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          particles.forEach((p) => p.update());
+          requestAnimationFrame(animate);
+        }
+
+        window.addEventListener("resize", resize);
+        window.addEventListener("mousemove", (e) => {
+          mouse.x = e.clientX;
+          mouse.y = e.clientY;
+        });
+        window.addEventListener("mouseleave", () => {
+          mouse.x = -1000;
+          mouse.y = -1000;
+        });
+
+        resize();
+        animate();
+      }
+
+      // Background Parallax
+      window.addEventListener("scroll", () => {
+        const bgLayer = document.getElementById("hero-bg");
+        const midLayer = document.getElementById("hero-mid");
+        const heroContent = document.getElementById("hero-content");
+        if (bgLayer && midLayer && heroContent) {
+          let sy = window.scrollY;
+          bgLayer.style.transform = `translateY(${sy * 0.5}px)`;
+          midLayer.style.transform = `translateY(${sy * 0.2}px)`;
+          heroContent.style.opacity = Math.max(0, 1 - sy / 800);
+          heroContent.style.transform = `scale(${Math.max(0.9, 1 - sy / 4000)})`;
+        }
+      });
     </script>
   </body>
 </html>
